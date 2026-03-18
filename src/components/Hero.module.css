@@ -1,0 +1,94 @@
+.heroSection {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 0 4rem;
+  overflow: hidden;
+}
+
+.sceneContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.sceneContainer > div {
+  pointer-events: auto;
+  cursor: grab;
+}
+
+.sceneContainer > div:active {
+  cursor: grabbing;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+}
+
+.title {
+  font-size: clamp(4.5rem, 8vw, 8rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -3px;
+  margin-bottom: 1.5rem;
+}
+
+.accent {
+  background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  max-width: 500px;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+.actions {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.primaryBtn {
+  padding: 1rem 2.5rem;
+  background-color: var(--foreground);
+  color: var(--background);
+  font-weight: 600;
+  border-radius: 50px;
+  font-size: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.primaryBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 240, 255, 0.15);
+}
+
+@media (max-width: 1024px) {
+  .sceneContainer {
+    width: 100%;
+    opacity: 0.4;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    padding: 0 2rem;
+  }
+  .title {
+    font-size: 3.5rem;
+    letter-spacing: -1px;
+  }
+}

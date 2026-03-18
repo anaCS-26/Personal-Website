@@ -1,0 +1,49 @@
+Asad Ansari
+343-463-2505 |asad.n.ansari.03@gmail.com |LinkedIn |GitHub
+Education
+Bachelor of Computer Science Honors, AI & ML Stream Sep 2021 – Dec 2025
+Carleton University Ottawa, ON
+•Graduated with Honors
+•Dean’s List Scholarship Recipient (2021-2022)
+•Azure AI Fundamentals Certification (AI-900)
+Experience
+Technology Strategic Initiatives - Brookfield Renewable May 2025 – Sep 2025
+JavaScript, Microsoft Azure, AWS, PostgreSQL, Excel, Power BI, Microsoft Fabric Gatineau, QC
+•Engineered Python andSQL data pipelines on Microsoft Fabric to extract, transform, and model
+multi-million-record datasets, ensuring data quality and consistency for downstream analytics.
+•Designed and deployed Power BI dashboards surfacing operational KPIs across Canadian and US industrial
+assets, translating complex engineering data into actionable insights for leadership and technical teams.
+•Conducted UAT validation for Row-Level Security releases (RLS 8/9) on AWS RAMD , designing positive and
+negative test scenarios and coordinating resolution of data access issues across cross-functional teams.
+Data Analyst - AI & Cloud Solutions Intern - Enbridge Jan 2024 – Sep 2024
+Microsoft Azure, Azure Databricks, SQL Developer, Power BI, Python Toronto, ON
+•Developed a Python -based Azure Function API integrating with Databricks SQL viaREST , enabling
+real-time data retrieval for AI/ML pipelines and reducing query latency by 30%.
+•Prototyped agent-based AI workflows on Azure AI Foundry , integrating LLMs ( Phi-3 Vision ,LLaVA ) for
+OCR-based meter reading and evaluating automation impact on accuracy.
+•Built interactive Power BI dashboards to surface predictive maintenance KPIs, improving data accessibility for
+engineering and operations teams.
+•Queried Oracle SQL databases ( Maximo ) to extract and analyze work order data, building Power BI
+visualizations to surface operational patterns for engineering and asset management teams.
+Teaching Assistant - Carleton University Sep 2022 – Dec 2025
+Python (COMP 1005), Java (COMP 1406), Introduction to Reinforcement Learning (COMP 4010) Ottawa, ON
+•Delivered weekly tutorials in Python andJava to 100+ students across algorithms, data structures, and
+reinforcement learning, while providing individualized technical mentorship.
+Projects
+Lung Disease AI Detection End-to-End Azure Web App
+•Architected an end-to-end Azure inference pipeline: Python FastAPI REST API handles model serving, Azure
+Blob Storage manages uploads, and Azure Static Web Apps delivers the frontend.
+•Fine-tuned a transfer-learning CNN in PyTorch for chest X-ray classification; added Grad-CAM so clinicians can
+interpret model decisions visually.
+•Integrated GPT-4o-mini to convert raw model scores into plain-English summaries, maintaining a
+human-in-the-loop review step.
+Local Cricket Club Data Pipeline |Python, Power BI, MySQL, Git
+•Built a Python web scraping pipeline to automate extraction of DCA data, storing structured results in a
+MySQL database for downstream querying and analysis.
+•Designed the schema and query layer to support reproducible, analytics-ready outputs from raw scraped data.
+Technical Skills
+Programming: Python, JavaScript (Node.js, React, Next.js), C/C++, Java
+AI/ML: Agentic AI, LLMs, PyTorch, TensorFlow, scikit-learn, ONNX, YOLOv8, Grad-CAM
+Data & Cloud: Azure (AI Foundry, Databricks, Blob Storage), PostgreSQL, MySQL, AWS, Oracle SQL
+DevOps & APIs: FastAPI, Docker, Git, Linux, CI/CD, REST APIs, Azure DevOps
+Visualization: Power BI, PI Vision, Microsoft Fabric, Progressive Web Apps

@@ -1,0 +1,48 @@
+.introContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #020202;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.terminal {
+  width: 100%;
+  max-width: 800px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.25rem;
+  color: #00f0ff;
+  line-height: 2;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
+
+.prompt {
+  color: #7000ff;
+  margin-right: 0.75rem;
+  text-shadow: 0 0 10px rgba(112, 0, 255, 0.5);
+}
+
+.cursor {
+  display: inline-block;
+  color: #00f0ff;
+  animation: blink 1s step-end infinite;
+  margin-left: 0.5rem;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@media (max-width: 768px) {
+  .terminal {
+    font-size: 1rem;
+  }
+}

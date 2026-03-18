@@ -1,0 +1,2 @@
+src/components/NetworkScene.tsx(51,11): error TS7034: Variable 'edg' implicitly has type 'any[]' in some locations where its type cannot be determined.
+src/components/NetworkScene.tsx(71,12): error TS7005: Variable 'edg' implicitly has an 'any[]' type.
