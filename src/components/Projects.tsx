@@ -69,7 +69,14 @@ export default function Projects() {
                 ))}
               </div>
               
-              <a href={project.link} className={styles.projectLink} style={{ color: project.color }}>
+              <a 
+                href={project.link} 
+                className={styles.projectLink} 
+                style={{ color: project.color }}
+                aria-label={`View ${project.title} project`}
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
                 View Project <span>→</span>
               </a>
             </div>
