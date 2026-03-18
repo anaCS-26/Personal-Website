@@ -38,12 +38,14 @@ export default function GlassObject() {
           backside 
           backsideThickness={1.5} 
           thickness={1.5} 
-          anisotropicBlur={0.2}
-          chromaticAberration={0.06}
+          resolution={256} // Capped resolution to drastically improve fps
+          samples={4} // Reduced sampling from default to prevent stuttering
+          anisotropicBlur={0.1}
+          chromaticAberration={0.05}
           distortion={0.3}
           distortionScale={0.5}
-          temporalDistortion={0.1}
-          clearcoat={1}
+          temporalDistortion={0.0} // Disabled temporal distortion (time-based noise recalculation)
+          clearcoat={0.5}
           attenuationDistance={0.5}
           attenuationColor="#ffffff"
           color="#ffffff"

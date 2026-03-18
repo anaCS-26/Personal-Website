@@ -32,21 +32,21 @@ export default function Projects() {
       title: "Lung Disease AI Scanner",
       description: "An end-to-end Azure inference pipeline leveraging a PyTorch CNN and GPT-4o-mini to classify and summarize chest X-rays.",
       tags: ["Python", "PyTorch", "Azure"],
-      link: "#",
+      link: "https://github.com/anaCS-26/Pulmolens-model",
       color: "#00f0ff"
     },
     {
       title: "Sports Data Pipeline",
       description: "An automated web scraping pipeline built to extract local DCA cricket data and store it in MySQL for Power BI dashboards.",
       tags: ["Python", "MySQL", "Power BI"],
-      link: "#",
+      link: "https://github.com/anaCS-26/DCA-MySQLProject",
       color: "#7000ff"
     },
     {
       title: "3D Interactive Portfolio",
       description: "A visually stunning personal portfolio featuring dynamic React Three Fiber elements and buttery smooth GSAP animations.",
       tags: ["Next.js", "Three.js", "GSAP"],
-      link: "#",
+      link: "https://github.com/anaCS-26/Personal-Website",
       color: "#ff0055"
     }
   ];

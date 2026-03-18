@@ -38,19 +38,21 @@ export default function Contact() {
           I&apos;m currently open to new opportunities. Whether you have a question or just want to say hi, I&apos;ll try my best to get back to you!
         </p>
 
-        <div className="contact-reveal">
+        <div className={`contact-reveal ${styles.btnGroup}`}>
           <a href="mailto:asad.n.ansari.03@gmail.com" className={styles.emailBtn}>
             Say Hello
+          </a>
+          <a href="/AsadResume.pdf" target="_blank" rel="noopener noreferrer" className={styles.resumeBtn}>
+            View Resume
           </a>
         </div>
       </div>
       
       <footer className={styles.footer}>
-        <p>© {new Date().getFullYear()} Asad. Built with Next.js, R3F & GSAP.</p>
+        <p>© {new Date().getFullYear()} Asad Ansari.</p>
         <div className={styles.socials}>
-          <a href="#">GitHub</a>
-          <a href="#">LinkedIn</a>
-          <a href="#">Twitter</a>
+          <a href="https://github.com/anaCS-26" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://www.linkedin.com/in/asad-ansari-ontario/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>
       </footer>
     </section>

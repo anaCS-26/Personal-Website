@@ -34,6 +34,13 @@
   max-width: 600px;
 }
 
+.btnGroup {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .emailBtn {
   display: inline-block;
   padding: 1.25rem 3rem;
@@ -44,13 +51,29 @@
   border-radius: 50px;
   font-size: 1.125rem;
   transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
 }
 
 .emailBtn:hover {
-  background-color: rgba(0, 240, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
   transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+}
+
+.resumeBtn {
+  display: inline-block;
+  padding: 1.25rem 3rem;
+  background-color: var(--foreground);
+  color: var(--background);
+  border: 1px solid var(--foreground);
+  font-weight: 600;
+  border-radius: 50px;
+  font-size: 1.125rem;
+  transition: all 0.3s ease;
+}
+
+.resumeBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
 }
 
 .footer {
