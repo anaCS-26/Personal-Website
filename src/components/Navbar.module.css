@@ -63,7 +63,7 @@
   .navbar {
     padding: 1.5rem 2rem;
   }
-  .navLinks {
+  .navLinks a:not(.contactBtn) {
     display: none;
   }
 }

@@ -104,9 +104,15 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 4rem 2rem;
+    padding: 4rem 1.5rem;
   }
   .projectGrid {
     grid-template-columns: 1fr;
+  }
+  .projectCard {
+    padding: 1.5rem;
+  }
+  .projectTitle {
+    font-size: 1.5rem;
   }
 }

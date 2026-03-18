@@ -85,14 +85,20 @@
 
 @media (max-width: 768px) {
   .heroSection {
-    padding: 0 2rem;
+    padding: 0 1.5rem;
   }
   .title {
-    font-size: 3.5rem;
+    font-size: clamp(2.5rem, 10vw, 3.5rem);
     letter-spacing: -1px;
+    margin-bottom: 1rem;
+  }
+  .subtitle {
+    font-size: 1rem;
+    margin-bottom: 2rem;
   }
   .introText {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 8vw, 3rem);
+    letter-spacing: 0.1em;
   }
 }
 
