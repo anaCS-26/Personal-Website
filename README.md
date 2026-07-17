@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Personal portfolio + AsadGPT
 
-## Getting Started
+My personal portfolio site. The centerpiece is **AsadGPT**, a live AI assistant
+grounded in my real experience — ask it anything about my projects, internships,
+or skills and it answers with working links into the site.
 
-First, run the development server:
+## How AsadGPT works
+
+- **No RAG, no vector DB** — my facts are small enough to live in a single
+  knowledge file (`knowledge/about-me.md`) injected into the system prompt.
+  Simpler, cheaper, and more accurate at this scale.
+- **Model**: Gemini 2.5 Flash Lite via `@google/genai`, streamed from a Next.js
+  Route Handler (`app/api/chat/route.ts`) so the API key stays server-side.
+- **Honest by design** — it only states facts from the knowledge file; anything
+  else gets "you'd have to ask Asad directly."
+- **Public-safe**: per-IP rate limiting + a global daily budget (Upstash Redis,
+  with an in-memory fallback), input clamping, prompt-injection guardrails, and
+  graceful fallbacks when the API is down.
+- **Fluid UX**: typewriter streaming, voice input (Web Speech API), suggestion
+  chips, and a conversation that resets when you leave the chat.
+
+## Stack
+
+Next.js (App Router) · TypeScript · Tailwind CSS v4 · Gemini API ·
+Upstash Redis · deployed on Vercel
+
+## Running locally
 
 ```bash
+npm install
+cp .env.example .env.local   # add your GEMINI_API_KEY
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Optional: add Upstash Redis credentials in `.env.local` for real rate limiting
+(falls back to per-instance in-memory limits without them).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Content
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `knowledge/about-me.md` — the assistant's single source of truth
+- `lib/content.ts` — structured content for the site sections
+- `lib/system-prompt.ts` — AsadGPT's persona and guardrails
