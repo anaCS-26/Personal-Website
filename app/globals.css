@@ -1,26 +1,189 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+   Theme tokens — "signal in the dark"
+   Dark is the primary theme; light is a first-class alternate.
+   Switched via data-theme on <html> (set pre-hydration in layout.tsx).
+--------------------------------------------------------------------------- */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* dark (default) */
+  --bg: #0a0d13;
+  --bg-elevated: #10141d;
+  --surface: #151a26;
+  --surface-hover: #1a2030;
+  --fg: #eae7e0;
+  --fg-muted: #a2a8b6;
+  --fg-faint: #7d8496;
+  --accent: #e2a33c;
+  --accent-strong: #f0b65a;
+  --accent-contrast: #0a0d13;
+  --accent-soft: rgba(226, 163, 60, 0.13);
+  --border: rgba(234, 231, 224, 0.09);
+  --border-strong: rgba(234, 231, 224, 0.18);
+  --glow: rgba(226, 163, 60, 0.07);
+  --glow-cool: rgba(96, 128, 200, 0.08);
+  --shadow: rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: #faf7f0;
+  --bg-elevated: #ffffff;
+  --surface: #f1ecdf;
+  --surface-hover: #eae4d3;
+  --fg: #1c1f27;
+  --fg-muted: #4d5362;
+  --fg-faint: #666c82;
+  --accent: #a3690d;
+  --accent-strong: #7e5008;
+  --accent-contrast: #faf7f0;
+  --accent-soft: rgba(163, 105, 13, 0.1);
+  --border: rgba(28, 31, 39, 0.12);
+  --border-strong: rgba(28, 31, 39, 0.24);
+  --glow: rgba(226, 163, 60, 0.16);
+  --glow-cool: rgba(96, 128, 200, 0.1);
+  --shadow: rgba(60, 50, 30, 0.12);
+  color-scheme: light;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-faint: var(--fg-faint);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-accent-soft: var(--accent-soft);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --font-display: var(--font-newsreader), Georgia, serif;
+  --font-sans: var(--font-schibsted), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-blink-dot: blink-dot 2.4s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes blink-dot {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+
+html {
+  scroll-behavior: smooth;
+}
+
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease;
+}
+
+/* Layered atmosphere: faint dot grid over the base color */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 70%);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Accent-swept links (opt in with .link-sweep) */
+.link-sweep {
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.link-sweep:hover,
+.link-sweep:focus-visible {
+  background-size: 100% 1px;
+}
+
+/* View-transition theme wash (used by the theme toggle) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  clip-path: circle(0% at var(--toggle-x, 90%) var(--toggle-y, 5%));
+  animation: theme-wash 0.55s ease-out forwards;
+}
+
+@keyframes theme-wash {
+  to {
+    clip-path: circle(150% at var(--toggle-x, 90%) var(--toggle-y, 5%));
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion: kill animation everywhere, keep function
+--------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+    clip-path: none !important;
+  }
 }
