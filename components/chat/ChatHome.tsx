@@ -165,7 +165,7 @@ export function ChatHome() {
             >
               {messages.length === 0 && (
                 <p className="pt-10 text-center font-mono text-sm text-fg-faint">
-                  ask AsadGPT anything — it&apos;s grounded in Asad&apos;s real experience
+                  ask AsadGPT anything, from his projects to what he cooks
                 </p>
               )}
               {messages.map((m, i) =>
@@ -271,7 +271,7 @@ export function ChatHome() {
           </button>
         </form>
         <p className="mt-2.5 text-center font-mono text-[10px] text-fg-faint">
-          AsadGPT — a live LLM grounded in my real experience
+          AsadGPT · a live LLM that answers from my real experience
         </p>
       </div>
     </div>

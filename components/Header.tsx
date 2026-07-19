@@ -16,7 +16,7 @@ export function Header() {
         <Link
           href="/"
           className="flex items-center gap-2 font-medium"
-          aria-label="Asad Ansari — home"
+          aria-label="Asad Ansari, home"
         >
           <AvatarMark size={24} />
           <span className="hidden md:inline">Asad Ansari</span>

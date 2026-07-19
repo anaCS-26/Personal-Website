@@ -1,13 +1,13 @@
 import { PageShell } from "@/components/PageShell";
 import { projects } from "@/lib/content";
 
-export const metadata = { title: "Projects — Asad Ansari" };
+export const metadata = { title: "Projects · Asad Ansari" };
 
 export default function ProjectsPage() {
   return (
     <PageShell
       eyebrow="projects"
-      title="Things I've actually shipped"
+      title="Things I've shipped"
     >
       <div className="grid gap-5 md:grid-cols-2">
         {projects.map((p) => (

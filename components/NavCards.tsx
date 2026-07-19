@@ -83,7 +83,7 @@ export function NavCards() {
           />
         </svg>
         <CardTitle>Projects</CardTitle>
-        <p className="mt-1 text-sm text-fg-muted">Things I&apos;ve actually shipped.</p>
+        <p className="mt-1 text-sm text-fg-muted">Things I&apos;ve shipped.</p>
         <ul className="mt-4 space-y-2.5">
           {projects.map((p) => (
             <li

@@ -9,7 +9,7 @@ export const SUGGESTIONS = [
   "Who is Asad?",
   "What has he built with AI?",
   "Tell me about PulmoLens",
-  "What's his work experience?",
+  "What does he do for fun?",
 ];
 
 export const FALLBACK =

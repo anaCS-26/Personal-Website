@@ -1,17 +1,17 @@
 # Personal portfolio + AsadGPT
 
 My personal portfolio site. The centerpiece is **AsadGPT**, a live AI assistant
-grounded in my real experience — ask it anything about my projects, internships,
+grounded in my real experience. Ask it anything about my projects, internships,
 or skills and it answers with working links into the site.
 
 ## How AsadGPT works
 
-- **No RAG, no vector DB** — my facts are small enough to live in a single
+- **No RAG, no vector DB**: my facts are small enough to live in a single
   knowledge file (`knowledge/about-me.md`) injected into the system prompt.
   Simpler, cheaper, and more accurate at this scale.
 - **Model**: Gemini 2.5 Flash Lite via `@google/genai`, streamed from a Next.js
   Route Handler (`app/api/chat/route.ts`) so the API key stays server-side.
-- **Honest by design** — it only states facts from the knowledge file; anything
+- **Honest by design**: it only states facts from the knowledge file; anything
   else gets "you'd have to ask Asad directly."
 - **Public-safe**: per-IP rate limiting + a global daily budget (Upstash Redis,
   with an in-memory fallback), input clamping, prompt-injection guardrails, and
@@ -37,6 +37,6 @@ Optional: add Upstash Redis credentials in `.env.local` for real rate limiting
 
 ## Content
 
-- `knowledge/about-me.md` — the assistant's single source of truth
-- `lib/content.ts` — structured content for the site sections
-- `lib/system-prompt.ts` — AsadGPT's persona and guardrails
+- `knowledge/about-me.md`: the assistant's single source of truth
+- `lib/content.ts`: structured content for the site sections
+- `lib/system-prompt.ts`: AsadGPT's persona and guardrails

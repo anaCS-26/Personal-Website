@@ -48,8 +48,8 @@ export async function POST(req: Request) {
       return friendly(
         verdict.reason === "ip" ? 429 : 503,
         verdict.reason === "ip"
-          ? `Whoa — that's a lot of questions at once. Give me a minute to catch my breath, or ${EMAIL_LINK} directly.`
-          : `I've hit my chat budget for today. Please ${EMAIL_LINK} — he answers fast.`,
+          ? `Whoa, that's a lot of questions at once. Give me a minute to catch my breath, or ${EMAIL_LINK} directly.`
+          : `I've hit my chat budget for today. Please ${EMAIL_LINK} instead, he answers fast.`,
       );
     }
   } catch (err) {
@@ -71,7 +71,7 @@ export async function POST(req: Request) {
     messages = null;
   }
   if (!messages) {
-    return friendly(400, `That message didn't come through right — try again?`);
+    return friendly(400, `That message didn't come through right. Try again?`);
   }
 
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });

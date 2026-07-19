@@ -4,30 +4,52 @@
 - Name: Asad Ansari
 - Location: Ottawa, Ontario, Canada
 - Seeking: AI/ML Engineering roles anywhere in Canada (also open to Data/Cloud
-  engineering) — new grad
-- Open to relocation: Yes — happy to move anywhere across Canada
-- Work authorization: valid work permit for Canada — no sponsorship needed
+  engineering). New grad.
+- Open to relocation: Yes, happy to move anywhere across Canada
+- Work authorization: valid work permit for Canada, no sponsorship needed
 - Availability: immediately
 - Email: asad.n.ansari.03@gmail.com
 - GitHub: https://github.com/anaCS-26
 - LinkedIn: https://www.linkedin.com/in/asad-ansari-ontario/
-- Resume: not hosted on the site — visitors should connect via /contact and
-  email Asad, and he'll send the latest version
+- Resume: not hosted on the site. Visitors should connect via /contact and
+  email Asad, and he'll send the latest version.
 
 ## Bio
 Asad is a recent Carleton University graduate (Bachelor of Computer Science
-Honours, AI & Machine Learning stream, co-op — graduated December 2025 with
-Honours and Dean's Honour List standing). He builds AI systems end to end:
-training and fine-tuning models in PyTorch, wrapping them in production APIs,
-grounding LLMs with RAG, and shipping on cloud infrastructure (Azure, GCP,
-AWS). His interest in applied AI grew out of two energy-sector internships —
-prototyping multimodal LLM agents at Enbridge and modernizing data platforms at
-Brookfield Renewable — and he's happiest when reliable data, a well-evaluated
-model, and a clean interface come together into something people actually use.
+Honours, AI & Machine Learning stream, co-op, graduated December 2025 with
+Honours and Dean's Honour List standing). He got into coding through a
+programming course in high school. It just made sense to him, so he kept
+taking harder courses and building side projects, and that eventually turned
+into a degree and a career. Now he builds AI systems end to end: training and
+fine-tuning models in PyTorch, wrapping them in production APIs, grounding
+LLMs with RAG, and shipping on cloud infrastructure (Azure, GCP, AWS). Two
+energy-sector internships made applied AI real for him: prototyping
+multimodal LLM agents at Enbridge and modernizing data platforms at
+Brookfield Renewable.
+
+## Beyond work
+- Racing is his biggest hobby. He loves it, whether that's watching F1 or
+  going go-karting himself. In F1 he supports Mercedes and cheers for George
+  Russell and Kimi Antonelli.
+- He played varsity basketball in high school and still keeps up with sports
+  and the gym.
+- Gaming: mostly online multiplayer games with friends. He plays racing games
+  like Forza and the F1 games sometimes, and single-player games to wind
+  down. Favorites include The Last of Us Part 1 (not Part 2, he didn't like
+  the storyline) and Subnautica 2.
+- He cooks regularly. Mostly desi dishes, and he's tried some Arab dishes
+  too. He'll do beef or lamb steak sometimes, and burgers are his go-to when
+  he wants something quick. Big on protein and meat.
+- He grew up in Saudi Arabia, is ethnically Indian, and moved to Canada for
+  university.
+- He speaks Urdu and English and can read Arabic.
+- He's visited over 10 countries and likes traveling.
+- His values: be respectful, and stay open-minded about what other people
+  think.
 
 ## Experience
 
-### Brookfield Renewable — Technology Strategic Initiatives Intern
+### Brookfield Renewable · Technology Strategic Initiatives Intern
 May 2025 – August 2025 (4 months) · Gatineau, QC (IT Digital Insights, Business Services Group)
 - Cleaned and transformed 3M+ rows of global vendor spend data with Python,
   SQL, and Microsoft Fabric, then designed a Power BI semantic model that
@@ -44,8 +66,8 @@ May 2025 – August 2025 (4 months) · Gatineau, QC (IT Digital Insights, Busine
   portfolio companies in the UK, Spain, and US with access and data-submission
   troubleshooting
 
-### Enbridge — Data Analyst, AI & Cloud Solutions Intern
-January 2024 – August 2024 (8 months) · Toronto/North York, ON (GDS — TIS Utility Business Solutions)
+### Enbridge · Data Analyst, AI & Cloud Solutions Intern
+January 2024 – August 2024 (8 months) · Toronto/North York, ON (GDS, TIS Utility Business Solutions)
 - Prototyped an Azure AI Foundry multimodal LLM agent using Phi-3 Vision and
   LLaVA for OCR-based gas meter reading, benchmarking vision-language model
   performance against operational meter imagery
@@ -60,7 +82,7 @@ January 2024 – August 2024 (8 months) · Toronto/North York, ON (GDS — TIS U
   portfolio in LeanIX (process flows, data models, application landscape) and
   analyzed Maximo work-order data in Power BI to support planning/scheduling
 
-### Carleton University — Teaching Assistant
+### Carleton University · Teaching Assistant
 Three terms between 2022 and 2025 · Ottawa, ON
 - Fall 2022: COMP 1005 (Python programming)
 - Winter–Summer 2023: COMP 1405 (Introduction to Computer Science)
@@ -70,7 +92,7 @@ Three terms between 2022 and 2025 · Ottawa, ON
 
 ## Education
 - Bachelor of Computer Science Honours, AI & Machine Learning stream
-  (Co-operative Education), Carleton University — Sep 2021 to Dec 2025
+  (Co-operative Education), Carleton University, Sep 2021 to Dec 2025
 - Graduated with Honours · Dean's Honour List · Henry Marshall Tory Scholarship
 - Coursework highlights: Intro to Machine Learning, Intro to AI, Reinforcement
   Learning (as TA), Database Management Systems, Operating Systems,
@@ -78,7 +100,7 @@ Three terms between 2022 and 2025 · Ottawa, ON
 
 ## Certifications
 - Microsoft Certified: Azure AI Fundamentals (AI-900)
-- Get Started with Tableau — Tableau (Mar 2023)
+- Get Started with Tableau, Tableau (Mar 2023)
 
 ## Skills
 - Languages: Python (Pandas, NumPy, scikit-learn), TypeScript/JavaScript, Java, C/C++, SQL
@@ -91,10 +113,10 @@ Three terms between 2022 and 2025 · Ottawa, ON
 
 ## Projects
 
-### PulmoLens — Chest X-ray Diagnostic Pipeline (flagship)
+### PulmoLens · Chest X-ray Diagnostic Pipeline (flagship)
 End-to-end medical AI pipeline classifying 14 lung pathologies, with visual
 explainability and guideline-grounded report generation. A technical portfolio
-project — not a diagnostic medical device.
+project, not a diagnostic medical device.
 - PyTorch + FastAPI served on Google Cloud Run; custom AttentionDenseNet
   (DenseNet121 + CBAM) achieving mean AUC 0.8511, with per-class thresholds
   calibrated to minimize false negatives on critical findings
@@ -123,7 +145,7 @@ and automated inventory reconciliation for a regional vending network.
 
 ### Surgical Tool Detection in Laparoscopic Video
 Detection and tracking of surgical instruments in laparoscopic surgery video
-(COMP 4900 — Surgical Data Science, Carleton, Fall 2025).
+(COMP 4900, Surgical Data Science, Carleton, Fall 2025).
 - Fine-tuned YOLO11m on the Cholec80 laparoscopic surgery dataset to detect 7
   surgical instrument classes at 83.39% mAP@0.5; ablation studies validated a
   5.8-point mAP improvement from data augmentation
@@ -136,17 +158,22 @@ Detection and tracking of surgical instruments in laparoscopic surgery video
 ### This website
 The site you're on: Next.js App Router + TypeScript + Tailwind on Vercel, with
 this assistant streaming from Google's Gemini via a server-side route handler,
-grounded in a single knowledge file — plus per-IP rate limiting and a daily
+grounded in a single knowledge file, plus per-IP rate limiting and a daily
 budget. The assistant itself is part of the portfolio.
 
 ## For the chatbot: answering guidance
 - Work authorization: Asad has a valid work permit for Canada and does not need
   sponsorship
 - Availability: he can start immediately
-- Resume requests: the resume is not downloadable on the site — invite the
+- Resume requests: the resume is not downloadable on the site. Invite the
   visitor to [connect with Asad](/contact) and email him; he'll send the latest
-  version right away
+  version right away.
 - Contact: share only the public email (asad.n.ansari.03@gmail.com); do not
   share a phone number
-- Do NOT discuss: salary expectations (redirect to email), grades/GPA, personal
-  details beyond this file, anything not in this file
+- Personal questions (food, hobbies, games, sports, background) are welcome:
+  answer them warmly from the "Beyond work" section
+- Do NOT discuss: salary expectations (redirect to email) or grades/GPA
+- For anything personal that this file doesn't cover (religion, relationships,
+  family, politics, and so on), redirect with charm. Something like: "That
+  one's above my pay grade, you'd have to ask Asad himself," with the email
+  link.

@@ -1,7 +1,7 @@
 import { PageShell } from "@/components/PageShell";
 import { experience } from "@/lib/content";
 
-export const metadata = { title: "Experience — Asad Ansari" };
+export const metadata = { title: "Experience · Asad Ansari" };
 
 export default function ExperiencePage() {
   return (

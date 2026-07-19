@@ -5,9 +5,9 @@ export default function NotFound() {
   return (
     <main className="flex flex-1 flex-col items-center justify-center gap-5 px-5 text-center">
       <AvatarMark size={64} thinking />
-      <h1 className="font-display text-4xl">404 — even I don&apos;t know this one</h1>
+      <h1 className="font-display text-4xl">404: even I don&apos;t know this one</h1>
       <p className="max-w-sm text-fg-muted">
-        This page doesn&apos;t exist. My knowledge only covers Asad — and Asad
+        This page doesn&apos;t exist. My knowledge only covers Asad, and Asad
         never built this URL.
       </p>
       <Link

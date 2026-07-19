@@ -1,36 +1,41 @@
 import { PageShell } from "@/components/PageShell";
 import { education, skills } from "@/lib/content";
 
-export const metadata = { title: "About — Asad Ansari" };
+export const metadata = { title: "About · Asad Ansari" };
 
 export default function AboutPage() {
   return (
     <PageShell
       eyebrow="about"
-      title="I build systems that learn"
+      title="A bit about me"
     >
       <div className="max-w-2xl space-y-5 text-lg leading-relaxed text-fg-muted">
         <p>
-          I&apos;m a recent Carleton University graduate — Bachelor of Computer
-          Science Honours in the <strong className="text-fg">AI &amp; Machine Learning</strong>{" "}
-          stream (co-op), Dean&apos;s Honour List — and I like building AI
-          systems end to end: training models in PyTorch, wrapping them in
-          production APIs, grounding LLMs with RAG, and shipping on real cloud
-          infrastructure.
+          I took my first programming course in high school and fell in love
+          with coding because it just made sense to me. I kept challenging
+          myself with side projects and harder courses, and that turned into a
+          Computer Science degree at Carleton in the{" "}
+          <strong className="text-fg">AI &amp; Machine Learning</strong> stream
+          (co-op, Dean&apos;s Honour List).
         </p>
         <p>
-          That taste for applied AI came from the energy sector: at{" "}
+          My internships are where AI became real for me. At{" "}
           <strong className="text-fg">Enbridge</strong> I prototyped multimodal
-          LLM agents for reading gas meters from photos, and at{" "}
-          <strong className="text-fg">Brookfield Renewable</strong>{" "}
-          I turned three million rows of vendor spend into models executives actually
-          used. I&apos;m happiest when reliable data, a well-evaluated model,
-          and a clean interface come together into something people use.
+          LLM agents that read gas meters from photos, and at{" "}
+          <strong className="text-fg">Brookfield Renewable</strong> I turned
+          three million rows of vendor spend data into reports executives used
+          every week. I like owning the whole thing: train the model, wrap it
+          in an API, ship it on real cloud infrastructure.
         </p>
         <p>
-          The assistant on the home page is a working example — a live LLM
-          grounded in my real experience, with rate limiting, streaming, and
-          honest &quot;I don&apos;t know&quot; answers built in.
+          Outside of work, I love racing. Watching F1, go-karting, any of it.
+          I cook a lot, mostly desi food, and I game with friends to wind
+          down. I grew up in Saudi Arabia, moved to Canada for university, and
+          I&apos;ve been to over 10 countries so far.
+        </p>
+        <p>
+          The assistant on the home page knows all of this and more. Ask it
+          anything.
         </p>
       </div>
 

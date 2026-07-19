@@ -20,7 +20,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Asad Ansari — AI/ML Engineer",
+  title: "Asad Ansari · AI/ML Engineer",
   description:
     "Portfolio of Asad Ansari: machine learning engineer building computer vision and LLM-powered systems. Ask the site's AI assistant anything about his work.",
 };
