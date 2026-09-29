@@ -1,50 +1,41 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   Theme tokens — "signal in the dark"
-   Dark is the primary theme; light is a first-class alternate.
+   Theme tokens. Warm neutrals with one restrained accent (links, focus).
    Switched via data-theme on <html> (set pre-hydration in layout.tsx).
 --------------------------------------------------------------------------- */
 
-:root {
-  /* dark (default) */
-  --bg: #0a0d13;
-  --bg-elevated: #10141d;
-  --surface: #151a26;
-  --surface-hover: #1a2030;
-  --fg: #eae7e0;
-  --fg-muted: #a2a8b6;
-  --fg-faint: #7d8496;
-  --accent: #e2a33c;
-  --accent-strong: #f0b65a;
-  --accent-contrast: #0a0d13;
-  --accent-soft: rgba(226, 163, 60, 0.13);
-  --border: rgba(234, 231, 224, 0.09);
-  --border-strong: rgba(234, 231, 224, 0.18);
-  --glow: rgba(226, 163, 60, 0.07);
-  --glow-cool: rgba(96, 128, 200, 0.08);
-  --shadow: rgba(0, 0, 0, 0.5);
-  color-scheme: dark;
+:root,
+[data-theme="light"] {
+  --bg: #fbfaf8;
+  --bg-elevated: #ffffff;
+  --surface: #f3f2ee;
+  --surface-hover: #ecebe6;
+  --fg: #1b1a18;
+  --fg-muted: #57544e;
+  --fg-faint: #75716a;
+  --accent: #a8431f;
+  --accent-soft: rgba(168, 67, 31, 0.08);
+  --border: rgba(27, 26, 24, 0.1);
+  --border-strong: rgba(27, 26, 24, 0.2);
+  --shadow: rgba(27, 26, 24, 0.06);
+  color-scheme: light;
 }
 
-[data-theme="light"] {
-  --bg: #faf7f0;
-  --bg-elevated: #ffffff;
-  --surface: #f1ecdf;
-  --surface-hover: #eae4d3;
-  --fg: #1c1f27;
-  --fg-muted: #4d5362;
-  --fg-faint: #666c82;
-  --accent: #a3690d;
-  --accent-strong: #7e5008;
-  --accent-contrast: #faf7f0;
-  --accent-soft: rgba(163, 105, 13, 0.1);
-  --border: rgba(28, 31, 39, 0.12);
-  --border-strong: rgba(28, 31, 39, 0.24);
-  --glow: rgba(226, 163, 60, 0.16);
-  --glow-cool: rgba(96, 128, 200, 0.1);
-  --shadow: rgba(60, 50, 30, 0.12);
-  color-scheme: light;
+[data-theme="dark"] {
+  --bg: #131312;
+  --bg-elevated: #1a1a18;
+  --surface: #20201e;
+  --surface-hover: #282826;
+  --fg: #ecebe7;
+  --fg-muted: #a9a69f;
+  --fg-faint: #8a877f;
+  --accent: #e5906b;
+  --accent-soft: rgba(229, 144, 107, 0.1);
+  --border: rgba(236, 235, 231, 0.09);
+  --border-strong: rgba(236, 235, 231, 0.17);
+  --shadow: rgba(0, 0, 0, 0.35);
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -56,37 +47,23 @@
   --color-fg-muted: var(--fg-muted);
   --color-fg-faint: var(--fg-faint);
   --color-accent: var(--accent);
-  --color-accent-strong: var(--accent-strong);
-  --color-accent-contrast: var(--accent-contrast);
   --color-accent-soft: var(--accent-soft);
   --color-line: var(--border);
   --color-line-strong: var(--border-strong);
 
   --font-display: var(--font-newsreader), Georgia, serif;
-  --font-sans: var(--font-schibsted), system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
 
-  --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-  --animate-blink-dot: blink-dot 2.4s ease-in-out infinite;
+  --animate-enter: enter 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 
-  @keyframes fade-up {
+  @keyframes enter {
     from {
       opacity: 0;
-      transform: translateY(14px);
+      transform: translateY(6px);
     }
     to {
       opacity: 1;
       transform: translateY(0);
-    }
-  }
-
-  @keyframes blink-dot {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.35;
     }
   }
 }
@@ -95,73 +72,73 @@
    Base
 --------------------------------------------------------------------------- */
 
-html {
-  scroll-behavior: smooth;
-}
-
-
-body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: var(--font-sans);
-  transition:
-    background-color 0.35s ease,
-    color 0.35s ease;
-}
-
-/* Layered atmosphere: faint dot grid over the base color */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image: radial-gradient(var(--border) 1px, transparent 1px);
-  background-size: 28px 28px;
-  mask-image: linear-gradient(to bottom, black 0%, transparent 70%);
-}
-
-::selection {
-  background: var(--accent);
-  color: var(--accent-contrast);
-}
-
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 2px;
-}
-
-/* Accent-swept links (opt in with .link-sweep) */
-.link-sweep {
-  background-image: linear-gradient(var(--accent), var(--accent));
-  background-size: 0% 1px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  transition: background-size 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.link-sweep:hover,
-.link-sweep:focus-visible {
-  background-size: 100% 1px;
-}
-
-/* View-transition theme wash (used by the theme toggle) */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-
-::view-transition-new(root) {
-  clip-path: circle(0% at var(--toggle-x, 90%) var(--toggle-y, 5%));
-  animation: theme-wash 0.55s ease-out forwards;
-}
-
-@keyframes theme-wash {
-  to {
-    clip-path: circle(150% at var(--toggle-x, 90%) var(--toggle-y, 5%));
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
   }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--fg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+/* Inline text links */
+.text-link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  transition: text-decoration-color 0.2s ease;
+}
+
+.text-link:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ---------------------------------------------------------------------------
+   Project illustrations (points sampled from each track's bezier path)
+--------------------------------------------------------------------------- */
+
+@keyframes track-a {
+  0% { transform: translate(70px, 70px) scale(1); }
+  33% { transform: translate(114px, 86px) scale(1.05); }
+  66% { transform: translate(151px, 82px) scale(0.96); }
+  100% { transform: translate(190px, 95px) scale(1.02); }
+}
+
+@keyframes track-b {
+  0% { transform: translate(250px, 170px) scale(1); }
+  33% { transform: translate(247px, 138px) scale(0.95); }
+  66% { transform: translate(272px, 126px) scale(1.04); }
+  100% { transform: translate(300px, 140px) scale(1); }
+}
+
+@keyframes track-c {
+  0% { transform: translate(130px, 200px) scale(1); }
+  33% { transform: translate(162px, 205px) scale(1.04); }
+  66% { transform: translate(192px, 200px) scale(0.97); }
+  100% { transform: translate(215px, 205px) scale(1.02); }
+}
+
+@keyframes route-drive {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -100; }
 }
 
 /* ---------------------------------------------------------------------------
@@ -179,11 +156,5 @@ body::before {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-  }
-
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation: none !important;
-    clip-path: none !important;
   }
 }

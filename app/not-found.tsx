@@ -1,20 +1,18 @@
 import Link from "next/link";
-import { AvatarMark } from "@/components/AvatarMark";
 
 export default function NotFound() {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-5 px-5 text-center">
-      <AvatarMark size={64} thinking />
-      <h1 className="font-display text-4xl">404: even I don&apos;t know this one</h1>
+    <main className="flex flex-1 flex-col items-center justify-center gap-4 px-5 text-center">
+      <p className="text-sm text-fg-faint">404</p>
+      <h1 className="font-display text-4xl tracking-tight">Page not found</h1>
       <p className="max-w-sm text-fg-muted">
-        This page doesn&apos;t exist. My knowledge only covers Asad, and Asad
-        never built this URL.
+        The page you&apos;re looking for doesn&apos;t exist or has moved.
       </p>
       <Link
         href="/"
-        className="rounded-full bg-accent px-5 py-2.5 font-mono text-sm text-accent-contrast transition-opacity hover:opacity-90"
+        className="mt-2 rounded-md bg-fg px-4 py-2 text-sm font-medium text-bg transition-opacity hover:opacity-85"
       >
-        back home →
+        Back to home
       </Link>
     </main>
   );

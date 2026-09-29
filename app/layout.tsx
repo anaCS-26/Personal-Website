@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Newsreader, Schibsted_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Inter, Newsreader } from "next/font/google";
 import "./globals.css";
 
 // Normal style only — titles are deliberately non-italic, single color
@@ -9,13 +9,8 @@ const newsreader = Newsreader({
   style: ["normal"],
 });
 
-const schibsted = Schibsted_Grotesk({
-  variable: "--font-schibsted",
-  subsets: ["latin"],
-});
-
-const jetbrains = JetBrains_Mono({
-  variable: "--font-jetbrains",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -25,8 +20,9 @@ export const metadata: Metadata = {
     "Portfolio of Asad Ansari: machine learning engineer building computer vision and LLM-powered systems. Ask the site's AI assistant anything about his work.",
 };
 
-// Runs before paint: applies the saved theme (default dark) so there is no flash.
-const themeInit = `(function(){try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark"){document.documentElement.dataset.theme=t}else{document.documentElement.dataset.theme="dark"}}catch(e){document.documentElement.dataset.theme="dark"}})()`;
+// Runs before paint: applies the saved theme, else the OS preference, so there
+// is no flash.
+const themeInit = `(function(){var d=document.documentElement;try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}d.dataset.theme=t}catch(e){d.dataset.theme="light"}})()`;
 
 export default function RootLayout({
   children,
@@ -36,9 +32,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="dark"
+      data-theme="light"
       suppressHydrationWarning
-      className={`${newsreader.variable} ${schibsted.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${newsreader.variable} ${inter.variable} h-full antialiased`}
     >
       <head>
         {/* suppressHydrationWarning: browser extensions inject scripts into

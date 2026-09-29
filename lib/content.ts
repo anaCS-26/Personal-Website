@@ -69,6 +69,10 @@ export type TimelineEntry = {
   org: string;
   title: string;
   period: string;
+  years: string;
+  /** Start and end as fractional years, for the timeline chart */
+  span: [number, number];
+  location: string;
   bullets: string[];
 };
 
@@ -76,7 +80,10 @@ export const experience: TimelineEntry[] = [
   {
     org: "Brookfield Renewable",
     title: "Technology Strategic Initiatives Intern",
-    period: "May 2025 – Aug 2025 · Gatineau, QC",
+    period: "May – Aug 2025",
+    years: "2025",
+    span: [2025 + 4 / 12, 2025 + 8 / 12],
+    location: "Gatineau, QC",
     bullets: [
       "Cleaned and transformed 3M+ rows of global vendor spend data (Python, SQL, Microsoft Fabric) into a Power BI semantic model for executive reporting",
       "Migrated PI Vision monitoring symbols from Visual Basic to JavaScript, modernizing asset visualization across renewable sites in Canada and the US",
@@ -86,7 +93,10 @@ export const experience: TimelineEntry[] = [
   {
     org: "Enbridge",
     title: "Data Analyst, AI & Cloud Solutions Intern",
-    period: "Jan 2024 – Aug 2024 · Toronto, ON",
+    period: "Jan – Aug 2024",
+    years: "2024",
+    span: [2024, 2024 + 8 / 12],
+    location: "Toronto, ON",
     bullets: [
       "Prototyped an Azure AI Foundry multimodal LLM agent (Phi-3 Vision, LLaVA) for OCR-based gas meter reading",
       "Proposed an AI architecture with UI mock-ups for a 5-week work order planning initiative, presented to senior stakeholders",
@@ -96,7 +106,10 @@ export const experience: TimelineEntry[] = [
   {
     org: "Carleton University",
     title: "Teaching Assistant",
-    period: "3 terms, 2022 – 2025 · Ottawa, ON",
+    period: "2022 – 2025, 3 terms",
+    years: "2022–25",
+    span: [2022, 2025 + 4 / 12],
+    location: "Ottawa, ON",
     bullets: [
       "Tutorials and 1:1 mentorship for 100+ students across Python (COMP 1005), Intro to Computer Science (COMP 1405), and Reinforcement Learning (COMP 4010)",
     ],

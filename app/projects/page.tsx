@@ -1,4 +1,6 @@
 import { PageShell } from "@/components/PageShell";
+import { ProjectVisual } from "@/components/ProjectVisual";
+import { ArrowUpRightIcon } from "@/components/icons";
 import { projects } from "@/lib/content";
 
 export const metadata = { title: "Projects · Asad Ansari" };
@@ -6,67 +8,53 @@ export const metadata = { title: "Projects · Asad Ansari" };
 export default function ProjectsPage() {
   return (
     <PageShell
-      eyebrow="projects"
-      title="Things I've shipped"
+      title="Projects"
+      intro="Selected work in computer vision, LLM systems, and full-stack development."
     >
-      <div className="grid gap-5 md:grid-cols-2">
-        {projects.map((p) => (
+      <div className="space-y-24">
+        {projects.map((p, i) => (
           <article
             key={p.slug}
             id={p.slug}
-            className={`group flex scroll-mt-24 flex-col rounded-2xl border border-line bg-bg-elevated p-6 transition-all hover:-translate-y-0.5 hover:border-line-strong hover:bg-surface ${
-              p.flagship ? "md:col-span-2" : ""
-            }`}
+            className="grid scroll-mt-24 items-start gap-8 md:grid-cols-2 md:gap-12"
           >
-            <div className="flex items-baseline gap-3">
-              <h2 className="font-display text-2xl">{p.name}</h2>
-              {p.flagship && (
-                <span className="rounded-full bg-accent-soft px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-accent">
-                  flagship
-                </span>
-              )}
+            <div className={`md:sticky md:top-24 ${i % 2 === 1 ? "md:order-2" : ""}`}>
+              <ProjectVisual slug={p.slug} />
             </div>
-            <p className="mt-2 text-fg-muted">{p.pitch}</p>
-            <ul className="mt-4 space-y-2 text-sm text-fg-muted">
-              {p.bullets.map((b, i) => (
-                <li key={i} className="flex gap-2.5">
-                  <span
-                    aria-hidden="true"
-                    className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-accent"
-                  />
-                  {b}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-5 flex flex-wrap gap-1.5">
-              {p.stack.map((s) => (
-                <span
-                  key={s}
-                  className="rounded border border-line px-2 py-0.5 font-mono text-[11px] text-fg-faint"
-                >
-                  {s}
-                </span>
-              ))}
-            </div>
-            <div className="mt-5 flex gap-5 border-t border-line pt-4 text-sm">
-              <a
-                href={p.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link-sweep text-accent"
-              >
-                GitHub ↗
-              </a>
-              {p.demo && (
+            <div>
+              <p className="text-sm tabular-nums text-fg-faint">
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <h2 className="mt-1 font-display text-3xl tracking-tight sm:text-4xl">{p.name}</h2>
+              <p className="mt-3 text-[17px] leading-relaxed">{p.pitch}</p>
+              <ul className="mt-5 list-disc space-y-2 pl-5 leading-relaxed text-fg-muted marker:text-fg-faint">
+                {p.bullets.map((b, j) => (
+                  <li key={j}>{b}</li>
+                ))}
+              </ul>
+              <p className="mt-5 text-sm text-fg-faint">{p.stack.join(" · ")}</p>
+              <div className="mt-6 flex flex-wrap gap-2.5 text-sm">
                 <a
-                  href={p.demo}
+                  href={p.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="link-sweep text-accent"
+                  className="inline-flex items-center gap-1.5 rounded-md border border-line-strong px-3 py-1.5 transition-colors hover:bg-surface"
                 >
-                  Live demo ↗
+                  Source
+                  <ArrowUpRightIcon size={13} />
                 </a>
-              )}
+                {p.demo && (
+                  <a
+                    href={p.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-md bg-fg px-3 py-1.5 text-bg transition-opacity hover:opacity-85"
+                  >
+                    Live demo
+                    <ArrowUpRightIcon size={13} />
+                  </a>
+                )}
+              </div>
             </div>
           </article>
         ))}

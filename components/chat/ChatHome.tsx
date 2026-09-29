@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AvatarMark } from "@/components/AvatarMark";
+import { LossLandscape } from "@/components/LossLandscape";
 import { NavCards } from "@/components/NavCards";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { renderRich } from "@/components/chat/rich";
@@ -109,15 +110,10 @@ export function ChatHome() {
   }, [listening]);
 
   return (
-    <div className="relative flex min-h-dvh flex-col overflow-hidden">
-      {/* atmosphere */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(700px 400px at 50% -10%, var(--glow), transparent 70%), radial-gradient(800px 500px at 50% 110%, var(--glow-cool), transparent 70%)",
-        }}
+    <div className="relative isolate flex min-h-dvh flex-col">
+      <LossLandscape
+        dimmed={open}
+        className="pointer-events-none absolute inset-0 -z-10 h-full w-full [mask-image:radial-gradient(ellipse_70%_60%_at_50%_45%,rgba(0,0,0,0.45),#000_85%)]"
       />
 
       <div className="absolute right-4 top-4 z-10">
@@ -125,67 +121,79 @@ export function ChatHome() {
       </div>
 
       {/* name */}
-      <header className="px-5 pt-14 text-center sm:pt-16">
+      <header className="animate-enter px-5 pt-16 text-center sm:pt-20">
         <h1
-          className={`animate-fade-up font-display leading-none transition-all duration-500 ${
+          className={`font-display leading-none tracking-tight transition-[font-size] duration-300 ${
             open ? "text-4xl sm:text-5xl" : "text-6xl sm:text-7xl"
           }`}
         >
           Asad Ansari
         </h1>
-        <p
-          className="animate-fade-up mt-3 font-mono text-sm text-fg-muted"
-          style={{ animationDelay: "120ms" }}
-        >
+        <p className="mt-4 text-fg-muted">
           {identity.role} · {identity.location}
         </p>
+        {!open && (
+          <p className="mx-auto mt-2 max-w-md text-fg-muted">
+            I build computer vision and LLM systems and ship them to production.
+          </p>
+        )}
       </header>
 
       {/* middle: nav cards OR conversation */}
-      <main className="flex min-h-0 flex-1 flex-col justify-center py-8">
+      <main className="flex min-h-0 flex-1 flex-col justify-center py-10">
         {open ? (
-          <div className="mx-auto flex h-full w-full max-w-3xl flex-col px-5">
-            <div className="mb-3 flex items-center justify-between">
+          <div className="mx-auto flex h-full w-full max-w-2xl flex-col px-5">
+            <div className="mb-4 flex items-center justify-between border-b border-line pb-3">
               <button
                 type="button"
                 onClick={closeChat}
-                className="link-sweep font-mono text-xs text-fg-muted hover:text-fg"
+                className="inline-flex items-center gap-1.5 text-sm text-fg-muted transition-colors hover:text-fg"
               >
-                ← back to the site
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M19 12H5m6-6-6 6 6 6"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                Back
               </button>
-              <p className="flex items-center gap-2 font-display text-lg">
-                <AvatarMark size={24} thinking={busy} />
+              <p className="flex items-center gap-2 text-sm font-medium">
+                <AvatarMark size={20} thinking={busy} />
                 AsadGPT
               </p>
             </div>
             <div
               ref={scrollRef}
               aria-live="polite"
-              className="min-h-0 flex-1 space-y-3 overflow-y-auto pb-2 text-[15px] leading-relaxed"
+              className="min-h-0 flex-1 space-y-5 overflow-y-auto pb-2 text-[15px] leading-relaxed"
             >
               {messages.length === 0 && (
-                <p className="pt-10 text-center font-mono text-sm text-fg-faint">
-                  ask AsadGPT anything, from his projects to what he cooks
+                <p className="pt-10 text-center text-sm text-fg-faint">
+                  Ask about Asad&apos;s work, projects, or life outside of it.
                 </p>
               )}
               {messages.map((m, i) =>
                 m.role === "user" ? (
                   <div
                     key={i}
-                    className="ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-sm bg-accent-soft px-4 py-2.5"
+                    className="ml-auto w-fit max-w-[85%] rounded-2xl bg-surface px-4 py-2.5"
                   >
                     {m.content}
                   </div>
                 ) : (
-                  <div key={i} className="flex max-w-[92%] gap-2.5">
+                  <div key={i} className="flex max-w-[92%] gap-3">
                     <AvatarMark
-                      size={26}
+                      size={24}
                       thinking={busy && i === messages.length - 1 && m.content === ""}
                     />
-                    <div className="w-fit rounded-2xl rounded-bl-sm bg-surface px-4 py-2.5">
-                      {renderRich(m.content)}
-                      {busy && i === messages.length - 1 && (
-                        <span className="ml-0.5 inline-block h-4 w-[2px] translate-y-0.5 animate-blink-dot bg-accent" />
+                    <div className="min-w-0 pt-0.5">
+                      {m.content === "" ? (
+                        <span className="text-fg-faint">Thinking…</span>
+                      ) : (
+                        renderRich(m.content)
                       )}
                     </div>
                   </div>
@@ -194,17 +202,14 @@ export function ChatHome() {
             </div>
           </div>
         ) : (
-          <div className="animate-fade-up" style={{ animationDelay: "220ms" }}>
+          <div className="animate-enter" style={{ animationDelay: "80ms" }}>
             <NavCards />
           </div>
         )}
       </main>
 
       {/* docked chat bar */}
-      <div
-        className="animate-fade-up mx-auto w-full max-w-3xl px-5 pb-6"
-        style={{ animationDelay: open ? "0ms" : "320ms" }}
-      >
+      <div className="mx-auto w-full max-w-2xl px-5 pb-6">
         {(!open || messages.length === 0) && (
           <div className="mb-3 flex flex-wrap justify-center gap-2">
             {SUGGESTIONS.map((s) => (
@@ -212,7 +217,7 @@ export function ChatHome() {
                 key={s}
                 type="button"
                 onClick={() => ask(s)}
-                className="rounded-full border border-line bg-bg-elevated/80 px-3.5 py-1.5 font-mono text-[11px] text-fg-muted backdrop-blur-sm transition-colors hover:border-accent hover:text-accent"
+                className="rounded-full border border-line bg-bg-elevated px-3.5 py-1.5 text-[13px] text-fg-muted transition-colors hover:border-line-strong hover:text-fg"
               >
                 {s}
               </button>
@@ -220,7 +225,7 @@ export function ChatHome() {
           </div>
         )}
         <form
-          className="flex items-center gap-2 rounded-2xl border border-line bg-bg-elevated/90 p-2.5 shadow-[0_16px_50px_-20px_var(--shadow)] backdrop-blur-sm focus-within:border-line-strong"
+          className="flex items-center gap-1.5 rounded-xl border border-line-strong bg-bg-elevated p-1.5 shadow-[0_2px_10px_var(--shadow)] transition-colors focus-within:border-fg-faint"
           onSubmit={(e) => {
             e.preventDefault();
             ask(input);
@@ -232,10 +237,10 @@ export function ChatHome() {
               onClick={toggleVoice}
               aria-label={listening ? "Stop voice input" : "Start voice input"}
               aria-pressed={listening}
-              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border transition-colors ${
+              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-colors ${
                 listening
-                  ? "border-accent bg-accent-soft text-accent"
-                  : "border-transparent text-fg-faint hover:text-accent"
+                  ? "bg-accent-soft text-accent"
+                  : "text-fg-faint hover:bg-surface hover:text-fg"
               }`}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -248,16 +253,16 @@ export function ChatHome() {
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={listening ? "listening…" : "What would you like to know about Asad?"}
+            placeholder={listening ? "Listening…" : "Ask AsadGPT about Asad"}
             aria-label="Ask the assistant about Asad"
             maxLength={1000}
-            className="h-10 min-w-0 flex-1 bg-transparent px-2 text-[15px] placeholder:text-fg-faint focus:outline-none"
+            className="h-9 min-w-0 flex-1 bg-transparent px-2 text-[15px] placeholder:text-fg-faint focus:outline-none"
           />
           <button
             type="submit"
             disabled={busy || !input.trim()}
             aria-label="Send"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent text-accent-contrast transition-opacity disabled:opacity-35"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-fg text-bg transition-opacity disabled:opacity-25"
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path
@@ -270,10 +275,17 @@ export function ChatHome() {
             </svg>
           </button>
         </form>
-        <p className="mt-2.5 text-center font-mono text-[10px] text-fg-faint">
-          AsadGPT · a live LLM that answers from my real experience
+        <p className="mt-2.5 text-center text-xs text-fg-faint">
+          AsadGPT answers from notes Asad wrote about himself. It can make mistakes.
         </p>
       </div>
+
+      {!open && (
+        <p className="pointer-events-none absolute bottom-5 right-5 hidden max-w-[15rem] text-right text-[11px] leading-snug text-fg-faint xl:block">
+          Background: contours of a loss surface, with optimizers running
+          gradient descent. Move your cursor to reshape it.
+        </p>
+      )}
     </div>
   );
 }

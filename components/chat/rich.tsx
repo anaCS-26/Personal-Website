@@ -48,7 +48,7 @@ export function renderRich(text: string): ReactNode[] {
         <a
           key={`a-${key++}`}
           href={href}
-          className="link-sweep text-accent"
+          className="text-link"
           {...(external && !href.startsWith("mailto:")
             ? { target: "_blank", rel: "noopener noreferrer" }
             : {})}
