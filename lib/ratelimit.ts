@@ -52,7 +52,27 @@ function memoryLimit(key: string, max: number, windowMs: number): boolean {
   return entry.count <= max;
 }
 
-export async function checkLimits(ip: string): Promise<LimitVerdict> {
+/**
+ * Rate-limit identity for an IP. A single IPv6 connection is typically
+ * assigned a whole /64, so per-address limits are trivial to dodge by
+ * rotating addresses; bucket IPv6 by its /64 prefix instead.
+ */
+export function limitKey(ip: string): string {
+  if (!ip.includes(":")) return ip; // IPv4 (or "anonymous")
+  const mapped = ip.match(/^::ffff:(\d+\.\d+\.\d+\.\d+)$/i);
+  if (mapped) return mapped[1];
+  const [head, tail] = ip.toLowerCase().split("::");
+  const left = head ? head.split(":") : [];
+  const right = tail ? tail.split(":") : [];
+  const groups =
+    tail === undefined
+      ? left
+      : [...left, ...Array(8 - left.length - right.length).fill("0"), ...right];
+  return `${groups.slice(0, 4).map((g) => g.replace(/^0+(?=.)/, "")).join(":")}::/64`;
+}
+
+export async function checkLimits(clientIp: string): Promise<LimitVerdict> {
+  const ip = limitKey(clientIp);
   if (minuteLimiter && dayLimiter && globalLimiter) {
     const [minute, day] = await Promise.all([
       minuteLimiter.limit(ip),
