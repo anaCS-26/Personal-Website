@@ -7,7 +7,10 @@ export const runtime = "nodejs";
 
 const MODEL = "claude-haiku-5-5";
 const MAX_TURNS = 12;
-const MAX_CHARS = 1000;
+const MAX_CHARS = 1000; // visitor messages
+// Earlier assistant replies come back from the client too; allow a full
+// max_tokens-length reply so follow-ups don't see their own answer truncated.
+const MAX_ASSISTANT_CHARS = 3000;
 
 const EMAIL_LINK = `[email Asad](mailto:${identity.email})`;
 
@@ -31,8 +34,11 @@ function parseBody(body: unknown): IncomingMsg[] | null {
     ) {
       return null;
     }
-    const content = (m as IncomingMsg).content.slice(0, MAX_CHARS).trim();
-    if (content) clean.push({ role: (m as IncomingMsg).role, content });
+    const { role } = m as IncomingMsg;
+    const content = (m as IncomingMsg).content
+      .slice(0, role === "user" ? MAX_CHARS : MAX_ASSISTANT_CHARS)
+      .trim();
+    if (content) clean.push({ role, content });
   }
   // Claude requires the conversation to open with a user turn; the MAX_TURNS
   // window can start on an assistant reply.
