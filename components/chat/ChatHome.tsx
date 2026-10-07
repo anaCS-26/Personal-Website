@@ -5,14 +5,38 @@ import { AvatarMark } from "@/components/AvatarMark";
 import { LossLandscape } from "@/components/LossLandscape";
 import { NavCards } from "@/components/NavCards";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { renderRich } from "@/components/chat/rich";
+import { ProjectCard } from "@/components/chat/ProjectCard";
+import { linkedProjectSlugs, renderRich } from "@/components/chat/rich";
 import {
   SUGGESTIONS,
   getSpeechRecognition,
   useChat,
+  type Msg,
   type SpeechRecognitionLike,
 } from "@/components/chat/useChat";
-import { identity } from "@/lib/content";
+import { identity, projects, type Project } from "@/lib/content";
+
+const MAX_CARDS = 2;
+
+/**
+ * Project cards to show under each assistant reply: the projects it links,
+ * once the reply has finished streaming. Replies linking more than MAX_CARDS
+ * projects are overviews and get none, and a project is carded at most once
+ * per conversation.
+ */
+function projectCards(messages: Msg[], streamingIndex: number): Project[][] {
+  const carded = new Set<string>();
+  return messages.map((m, i) => {
+    if (m.role !== "assistant" || i === streamingIndex) return [];
+    const linked = linkedProjectSlugs(m.content)
+      .map((slug) => projects.find((p) => p.slug === slug))
+      .filter((p): p is Project => p !== undefined);
+    if (linked.length > MAX_CARDS) return [];
+    const fresh = linked.filter((p) => !carded.has(p.slug));
+    fresh.forEach((p) => carded.add(p.slug));
+    return fresh;
+  });
+}
 
 export function ChatHome() {
   const { messages, busy, send, reset } = useChat();
@@ -109,8 +133,12 @@ export function ChatHome() {
     rec.start();
   }, [listening]);
 
+  const cards = projectCards(messages, busy ? messages.length - 1 : -1);
+
   return (
-    <div className="relative isolate flex min-h-dvh flex-col">
+    // Chat mode pins the layout to the viewport so the conversation scrolls
+    // inside its own pane and the chat bar stays docked
+    <div className={`relative isolate flex flex-col ${open ? "h-dvh" : "min-h-dvh"}`}>
       <LossLandscape
         dimmed={open}
         className="pointer-events-none absolute inset-0 -z-10 h-full w-full [mask-image:radial-gradient(ellipse_70%_60%_at_50%_45%,rgba(0,0,0,0.45),#000_85%)]"
@@ -142,7 +170,7 @@ export function ChatHome() {
       {/* middle: nav cards OR conversation */}
       <main className="flex min-h-0 flex-1 flex-col justify-center py-10">
         {open ? (
-          <div className="mx-auto flex h-full w-full max-w-2xl flex-col px-5">
+          <div className="mx-auto flex min-h-0 w-full max-w-2xl flex-1 flex-col px-5">
             <div className="mb-4 flex items-center justify-between border-b border-line pb-3">
               <button
                 type="button"
@@ -189,11 +217,18 @@ export function ChatHome() {
                       size={24}
                       thinking={busy && i === messages.length - 1 && m.content === ""}
                     />
-                    <div className="min-w-0 pt-0.5">
+                    <div className="min-w-0 space-y-3 pt-0.5">
                       {m.content === "" ? (
                         <span className="text-fg-faint">Thinking…</span>
                       ) : (
                         renderRich(m.content)
+                      )}
+                      {cards[i].length > 0 && (
+                        <div className="grid max-w-md gap-2 pt-1">
+                          {cards[i].map((p) => (
+                            <ProjectCard key={p.slug} p={p} />
+                          ))}
+                        </div>
                       )}
                     </div>
                   </div>
