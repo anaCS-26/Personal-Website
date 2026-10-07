@@ -9,7 +9,7 @@ or skills and it answers with working links into the site.
 - **No RAG, no vector DB**: my facts are small enough to live in a single
   knowledge file (`knowledge/about-me.md`) injected into the system prompt.
   Simpler, cheaper, and more accurate at this scale.
-- **Model**: Gemini 2.5 Flash Lite via `@google/genai`, streamed from a Next.js
+- **Model**: Claude Haiku 5.5 via `@anthropic-ai/sdk`, streamed from a Next.js
   Route Handler (`app/api/chat/route.ts`) so the API key stays server-side.
 - **Honest by design**: it only states facts from the knowledge file; anything
   else gets "you'd have to ask Asad directly."
@@ -21,14 +21,14 @@ or skills and it answers with working links into the site.
 
 ## Stack
 
-Next.js (App Router) · TypeScript · Tailwind CSS v4 · Gemini API ·
+Next.js (App Router) · TypeScript · Tailwind CSS v4 · Claude API ·
 Upstash Redis · deployed on Vercel
 
 ## Running locally
 
 ```bash
 npm install
-cp .env.example .env.local   # add your GEMINI_API_KEY
+cp .env.example .env.local   # add your ANTHROPIC_API_KEY
 npm run dev
 ```
 

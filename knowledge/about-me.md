@@ -179,7 +179,7 @@ announced launch date. More detail lives at https://platefulhq.com.
 
 ### This website
 The site you're on: Next.js App Router + TypeScript + Tailwind on Vercel, with
-this assistant streaming from Google's Gemini via a server-side route handler,
+this assistant streaming from Anthropic's Claude Haiku via a server-side route handler,
 grounded in a single knowledge file, plus per-IP rate limiting and a daily
 budget. The assistant itself is part of the portfolio.
 
