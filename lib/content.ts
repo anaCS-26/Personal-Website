@@ -18,9 +18,12 @@ export type Project = {
   pitch: string;
   bullets: string[];
   stack: string[];
-  github: string;
+  github?: string;
   demo?: string;
+  site?: string;
   flagship?: boolean;
+  /** Unreleased; shown under "In the works" instead of the main list */
+  upcoming?: boolean;
 };
 
 export const projects: Project[] = [
@@ -62,6 +65,20 @@ export const projects: Project[] = [
     ],
     stack: ["PyTorch", "YOLO11m", "DeepSORT", "Python"],
     github: "https://github.com/anaCS-26/Multi-tool-detection-with-YOLO",
+  },
+  {
+    slug: "plateful",
+    name: "Plateful",
+    pitch:
+      "An iPhone calorie tracker where you say what you ate and it's logged. Coming soon to the App Store.",
+    bullets: [
+      "Log by Siri, photo, barcode, or text: a language model identifies the foods and portions, then the numbers come from USDA, Health Canada, and Open Food Facts data rather than model memory",
+      "On-device estimation with Apple Intelligence where supported, with every estimate reviewable before it's saved",
+      "Apple Health sync, widgets, macro tracking, and weight trends, with no account needed to log locally",
+    ],
+    stack: ["iOS", "Apple Intelligence", "Claude", "HealthKit"],
+    site: "https://platefulhq.com",
+    upcoming: true,
   },
 ];
 

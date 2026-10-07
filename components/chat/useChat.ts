@@ -10,6 +10,7 @@ export const SUGGESTIONS = [
   "What has he built with AI?",
   "Tell me about PulmoLens",
   "What does he do for fun?",
+  "What's he cooking up?",
 ];
 
 export const FALLBACK =

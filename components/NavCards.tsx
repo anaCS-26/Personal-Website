@@ -80,7 +80,7 @@ export function NavCards() {
             <li key={p.slug} className="py-2.5">
               <p className="text-sm font-medium">{p.name}</p>
               <p className="mt-0.5 text-xs text-fg-faint">
-                {p.stack.slice(0, 3).join(" · ")}
+                {p.upcoming ? "Coming soon" : p.stack.slice(0, 3).join(" · ")}
               </p>
             </li>
           ))}

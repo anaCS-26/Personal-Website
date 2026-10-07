@@ -141,6 +141,25 @@
   to { stroke-dashoffset: -100; }
 }
 
+/* Plateful: one 9s cycle of say it, log it, fill the day */
+@keyframes plate-row {
+  0%, 4% { opacity: 0; transform: translateY(6px); }
+  12%, 86% { opacity: 1; transform: none; }
+  94%, 100% { opacity: 0; transform: none; }
+}
+
+@keyframes plate-ring {
+  0%, 10% { stroke-dashoffset: 100; }
+  42%, 86% { stroke-dashoffset: 38; }
+  96%, 100% { stroke-dashoffset: 100; }
+}
+
+@keyframes plate-bar {
+  0%, 12% { transform: scaleX(0); }
+  42%, 86% { transform: scaleX(1); }
+  96%, 100% { transform: scaleX(0); }
+}
+
 /* ---------------------------------------------------------------------------
    Reduced motion: kill animation everywhere, keep function
 --------------------------------------------------------------------------- */

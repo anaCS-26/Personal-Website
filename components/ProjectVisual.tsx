@@ -251,9 +251,93 @@ function DispatchRoutes() {
   );
 }
 
+/* Plateful: a spoken meal splits into logged items and fills the day's ring.
+   Base attributes hold the finished state so reduced motion shows it filled. */
+const MEAL_ITEMS = ["Eggs", "Toast", "Coffee"];
+const MACROS = [
+  { label: "Protein", w: 78, opacity: 1 },
+  { label: "Carbs", w: 58, opacity: 0.7 },
+  { label: "Fat", w: 42, opacity: 0.45 },
+];
+const CYCLE = "9s ease-in-out infinite backwards";
+
+function SpokenMeal() {
+  return (
+    <Frame label="Say it, and it's logged">
+      <svg viewBox="0 0 400 300" className="absolute inset-0 h-full w-full" aria-hidden="true">
+        {/* what was said */}
+        <g style={{ animation: `plate-row ${CYCLE}` }}>
+          <rect x="30" y="34" width="214" height="34" rx="17" fill="var(--bg-elevated)" stroke="var(--border-strong)" />
+          <text x="48" y="55.5" fontSize="12" fontFamily="var(--font-sans)" fill="var(--fg)">
+            Two eggs, toast, black coffee
+          </text>
+        </g>
+
+        {/* what got logged */}
+        {MEAL_ITEMS.map((item, i) => (
+          <g key={item} style={{ animation: `plate-row ${CYCLE}`, animationDelay: `${0.7 + i * 0.45}s` }}>
+            <rect x="30" y={90 + i * 38} width="214" height="30" rx="8" fill="var(--fg)" fillOpacity="0.05" />
+            <circle cx="48" cy={105 + i * 38} r="5" fill="var(--accent)" fillOpacity="0.35" />
+            <text x="62" y={109 + i * 38} fontSize="12" fontFamily="var(--font-sans)" fill="var(--fg)">
+              {item}
+            </text>
+            <rect x={190 - i * 8} y={102 + i * 38} width={42 + i * 8} height="6" rx="3" fill="var(--fg)" fillOpacity="0.16" />
+          </g>
+        ))}
+
+        {/* the day's ring */}
+        <circle cx="312" cy="112" r="46" fill="none" stroke="var(--fg)" strokeOpacity="0.08" strokeWidth="10" />
+        <circle
+          cx="312"
+          cy="112"
+          r="46"
+          fill="none"
+          stroke="var(--accent)"
+          strokeWidth="10"
+          strokeLinecap="round"
+          pathLength={100}
+          strokeDasharray="100"
+          strokeDashoffset="38"
+          transform="rotate(-90 312 112)"
+          style={{ animation: `plate-ring ${CYCLE}`, animationDelay: "0.9s" }}
+        />
+        <text x="312" y="116" textAnchor="middle" fontSize="11" fontFamily="var(--font-sans)" fill="var(--fg-muted)">
+          Today
+        </text>
+
+        {/* macros */}
+        {MACROS.map((m, i) => (
+          <g key={m.label}>
+            <text x="266" y={190 + i * 24} fontSize="10" fontFamily="var(--font-sans)" fill="var(--fg-muted)">
+              {m.label}
+            </text>
+            <rect x="266" y={195 + i * 24} width="92" height="5" rx="2.5" fill="var(--fg)" fillOpacity="0.08" />
+            <rect
+              x="266"
+              y={195 + i * 24}
+              width={m.w}
+              height="5"
+              rx="2.5"
+              fill="var(--accent)"
+              fillOpacity={m.opacity}
+              style={{
+                animation: `plate-bar ${CYCLE}`,
+                animationDelay: `${1 + i * 0.2}s`,
+                transformBox: "fill-box",
+                transformOrigin: "left",
+              }}
+            />
+          </g>
+        ))}
+      </svg>
+    </Frame>
+  );
+}
+
 export function ProjectVisual({ slug }: { slug: string }) {
   if (slug === "pulmolens") return <AttentionMap />;
   if (slug === "surgical-tracking") return <DetectionTracking />;
   if (slug === "nexgen-vending") return <DispatchRoutes />;
+  if (slug === "plateful") return <SpokenMeal />;
   return null;
 }
