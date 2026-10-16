@@ -8,6 +8,7 @@ const ALLOWED_HOSTS = new Set([
   "victorious-sky-0836ce10f.3.azurestaticapps.net",
   "platefulhq.com",
   "www.platefulhq.com",
+  "apps.apple.com",
 ]);
 
 const BULLET = /^\s*[-*•]\s+/;

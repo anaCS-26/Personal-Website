@@ -50,12 +50,23 @@ function ProjectArticle({ p, eyebrow, flip }: { p: Project; eyebrow: string; fli
               <ArrowUpRightIcon size={13} />
             </a>
           )}
+          {p.appStore && (
+            <a
+              href={p.appStore}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-md bg-fg px-3 py-1.5 text-bg transition-opacity hover:opacity-85"
+            >
+              App Store
+              <ArrowUpRightIcon size={13} />
+            </a>
+          )}
           {p.site && (
             <a
               href={p.site}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-md bg-fg px-3 py-1.5 text-bg transition-opacity hover:opacity-85"
+              className="inline-flex items-center gap-1.5 rounded-md border border-line-strong px-3 py-1.5 transition-colors hover:bg-surface"
             >
               {new URL(p.site).hostname}
               <ArrowUpRightIcon size={13} />

@@ -6,7 +6,7 @@ const BUTTON =
 
 /** Compact project summary shown under a chat reply that links the project. */
 export function ProjectCard({ p }: { p: Project }) {
-  const live = p.demo ?? p.site;
+  const live = p.demo ?? p.appStore ?? p.site;
   return (
     <article
       aria-label={p.name}
@@ -47,7 +47,7 @@ export function ProjectCard({ p }: { p: Project }) {
             rel="noopener noreferrer"
             className={`${BUTTON} bg-fg text-bg hover:opacity-85`}
           >
-            {p.demo ? "Live demo" : new URL(live).hostname}
+            {p.demo ? "Live demo" : p.appStore ? "App Store" : new URL(live).hostname}
             <ArrowUpRightIcon size={11} />
           </a>
         )}
