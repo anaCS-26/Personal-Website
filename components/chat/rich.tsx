@@ -95,7 +95,9 @@ function renderInline(text: string, prefix: string): ReactNode[] {
     const label = m[1];
     const href = m[2];
     let ok = false;
-    if (href.startsWith("/") || href.startsWith("#")) ok = true;
+    // "//host" and "/\host" are protocol-relative: browsers send them off-site
+    if (/^\/[/\\]/.test(href)) ok = false;
+    else if (href.startsWith("/") || href.startsWith("#")) ok = true;
     else if (href.startsWith("mailto:")) ok = true;
     else {
       try {

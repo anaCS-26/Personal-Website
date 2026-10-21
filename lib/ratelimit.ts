@@ -74,14 +74,20 @@ export function limitKey(ip: string): string {
 export async function checkLimits(clientIp: string): Promise<LimitVerdict> {
   const ip = limitKey(clientIp);
   if (minuteLimiter && dayLimiter && globalLimiter) {
-    const [minute, day] = await Promise.all([
-      minuteLimiter.limit(ip),
-      dayLimiter.limit(ip),
-    ]);
-    if (!minute.success || !day.success) return { ok: false, reason: "ip" };
-    const global = await globalLimiter.limit("all");
-    if (!global.success) return { ok: false, reason: "budget" };
-    return { ok: true };
+    try {
+      const [minute, day] = await Promise.all([
+        minuteLimiter.limit(ip),
+        dayLimiter.limit(ip),
+      ]);
+      if (!minute.success || !day.success) return { ok: false, reason: "ip" };
+      const global = await globalLimiter.limit("all");
+      if (!global.success) return { ok: false, reason: "budget" };
+      return { ok: true };
+    } catch (err) {
+      // Upstash unreachable: degrade to the in-memory limits below rather
+      // than letting every request through unmetered.
+      console.error("[chat] Upstash rate limit failed, using in-memory limits", err);
+    }
   }
 
   if (!memoryLimit(`min:${ip}`, LIMITS.perMinute, 60_000)) {

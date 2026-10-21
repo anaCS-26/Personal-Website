@@ -11,6 +11,8 @@ const MAX_CHARS = 1000; // visitor messages
 // Earlier assistant replies come back from the client too; allow a full
 // max_tokens-length reply so follow-ups don't see their own answer truncated.
 const MAX_ASSISTANT_CHARS = 3000;
+// A full MAX_TURNS conversation is ~40 KB; leave room for multi-byte text.
+const MAX_BODY_BYTES = 128 * 1024;
 
 const EMAIL_LINK = `[email Asad](mailto:${identity.email})`;
 
@@ -48,6 +50,32 @@ function parseBody(body: unknown): IncomingMsg[] | null {
 }
 
 export async function POST(req: Request) {
+  // Only this site's own pages may call the API. Other sites' visitors would
+  // otherwise spend the budget from thousands of IPs. Requiring JSON forces a
+  // CORS preflight, which cross-origin callers fail (no CORS headers are sent).
+  const fetchSite = req.headers.get("sec-fetch-site");
+  if (
+    (fetchSite !== null && fetchSite !== "same-origin") ||
+    !req.headers.get("content-type")?.startsWith("application/json")
+  ) {
+    return friendly(403, `That request didn't come from this site.`);
+  }
+  if (Number(req.headers.get("content-length") ?? 0) > MAX_BODY_BYTES) {
+    return friendly(413, `That conversation is too long. Try starting a new chat.`);
+  }
+
+  // Validate before rate limiting so malformed requests can't drain the
+  // per-IP or global daily budget.
+  let messages: IncomingMsg[] | null = null;
+  try {
+    messages = parseBody(await req.json());
+  } catch {
+    messages = null;
+  }
+  if (!messages) {
+    return friendly(400, `That message didn't come through right. Try again?`);
+  }
+
   const ip =
     req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "anonymous";
 
@@ -62,8 +90,10 @@ export async function POST(req: Request) {
       );
     }
   } catch (err) {
-    // Rate-limit store down: fail open (the Anthropic spend limit is still the backstop)
+    // checkLimits already falls back to in-memory limits when Upstash is down;
+    // reaching here is unexpected, so fail closed rather than spend unmetered.
     console.error("[chat] rate limit check failed", err);
+    return friendly(503, `I'm briefly unavailable. Please ${EMAIL_LINK} directly, or try again in a moment.`);
   }
 
   if (!process.env.ANTHROPIC_API_KEY) {
@@ -71,16 +101,6 @@ export async function POST(req: Request) {
       503,
       `I'm not wired up yet in this environment. In the meantime, ${EMAIL_LINK} or browse [his projects](/#projects).`,
     );
-  }
-
-  let messages: IncomingMsg[] | null = null;
-  try {
-    messages = parseBody(await req.json());
-  } catch {
-    messages = null;
-  }
-  if (!messages) {
-    return friendly(400, `That message didn't come through right. Try again?`);
   }
 
   const client = new Anthropic();
