@@ -82,12 +82,19 @@ export async function POST(req: Request) {
   try {
     const verdict = await checkLimits(ip);
     if (!verdict.ok) {
-      return friendly(
-        verdict.reason === "ip" ? 429 : 503,
-        verdict.reason === "ip"
-          ? `Whoa, that's a lot of questions at once. Give me a minute to catch my breath, or ${EMAIL_LINK} directly.`
-          : `I've hit my chat budget for today. Please ${EMAIL_LINK} instead, he answers fast.`,
-      );
+      if (verdict.reason === "ip") {
+        return friendly(
+          429,
+          `Whoa, that's a lot of questions at once. Give me a minute to catch my breath, or ${EMAIL_LINK} directly.`,
+        );
+      }
+      if (verdict.reason === "paused") {
+        return friendly(
+          503,
+          `Lots of people are chatting with me today, so I'm paused for new visitors until tomorrow. Please ${EMAIL_LINK} instead, he answers fast.`,
+        );
+      }
+      return friendly(503, `I've hit my chat budget for today. Please ${EMAIL_LINK} instead, he answers fast.`);
     }
   } catch (err) {
     // checkLimits already falls back to in-memory limits when Upstash is down;
