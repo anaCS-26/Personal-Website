@@ -19,6 +19,16 @@ export const metadata: Metadata = {
   title: "Asad Ansari · AI/ML Engineer",
   description:
     "Portfolio of Asad Ansari: machine learning engineer building computer vision and LLM-powered systems. Ask the site's AI assistant anything about his work.",
+  // Link previews. The card image itself comes from app/opengraph-image.tsx
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "Asad Ansari",
+    title: "Asad Ansari · AI/ML Engineer",
+    description:
+      "Machine learning engineer building computer vision and LLM systems. Ask AsadGPT anything about his work.",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 // Runs before paint: applies the saved theme, else the OS preference, so there
