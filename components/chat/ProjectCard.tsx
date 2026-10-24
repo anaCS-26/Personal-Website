@@ -24,6 +24,7 @@ export function ProjectCard({ p }: { p: Project }) {
       <p className="mt-2 text-xs text-fg-faint">{p.stack.slice(0, 4).join(" · ")}</p>
       <div className="mt-3 flex flex-wrap gap-2 text-xs">
         <a
+          data-track="card"
           href={`/projects#${p.slug}`}
           className={`${BUTTON} border border-line-strong hover:bg-surface`}
         >
@@ -31,6 +32,7 @@ export function ProjectCard({ p }: { p: Project }) {
         </a>
         {p.github && (
           <a
+            data-track="card"
             href={p.github}
             target="_blank"
             rel="noopener noreferrer"
@@ -42,6 +44,7 @@ export function ProjectCard({ p }: { p: Project }) {
         )}
         {live && (
           <a
+            data-track="card"
             href={live}
             target="_blank"
             rel="noopener noreferrer"

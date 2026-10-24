@@ -30,6 +30,7 @@ function ProjectArticle({ p, eyebrow, flip }: { p: Project; eyebrow: string; fli
         <div className="mt-6 flex flex-wrap gap-2.5 text-sm">
           {p.github && (
             <a
+              data-track="link"
               href={p.github}
               target="_blank"
               rel="noopener noreferrer"
@@ -41,6 +42,7 @@ function ProjectArticle({ p, eyebrow, flip }: { p: Project; eyebrow: string; fli
           )}
           {p.demo && (
             <a
+              data-track="link"
               href={p.demo}
               target="_blank"
               rel="noopener noreferrer"
@@ -52,6 +54,7 @@ function ProjectArticle({ p, eyebrow, flip }: { p: Project; eyebrow: string; fli
           )}
           {p.appStore && (
             <a
+              data-track="link"
               href={p.appStore}
               target="_blank"
               rel="noopener noreferrer"
@@ -63,6 +66,7 @@ function ProjectArticle({ p, eyebrow, flip }: { p: Project; eyebrow: string; fli
           )}
           {p.site && (
             <a
+              data-track="link"
               href={p.site}
               target="_blank"
               rel="noopener noreferrer"

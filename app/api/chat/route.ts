@@ -1,5 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { checkLimits } from "@/lib/ratelimit";
+import { after } from "next/server";
+import { record } from "@/lib/analytics";
+import { checkLimits, limitKey } from "@/lib/ratelimit";
 import { SYSTEM_PROMPT } from "@/lib/system-prompt";
 import { identity } from "@/lib/content";
 
@@ -82,6 +84,7 @@ export async function POST(req: Request) {
   try {
     const verdict = await checkLimits(ip);
     if (!verdict.ok) {
+      after(() => record("chat_blocked", verdict.reason));
       if (verdict.reason === "ip") {
         return friendly(
           429,
@@ -109,6 +112,16 @@ export async function POST(req: Request) {
       `I'm not wired up yet in this environment. In the meantime, ${EMAIL_LINK} or browse [his projects](/#projects).`,
     );
   }
+
+  // Which user turn this is: "1" starts a conversation. History is capped at
+  // MAX_TURNS, so deep conversations bucket into "6+".
+  const turn = messages.filter((m) => m.role === "user").length;
+  after(() =>
+    record("chat_message", turn >= 6 ? "6+" : String(turn), {
+      set: "chatters",
+      id: limitKey(ip),
+    }),
+  );
 
   const client = new Anthropic();
 
@@ -144,6 +157,7 @@ export async function POST(req: Request) {
               controller.enqueue(
                 encoder.encode(`\n\nThat's not something I can help with. Ask me about Asad's work, or ${EMAIL_LINK} directly.`),
               );
+              await record("chat_error", "refusal");
             }
           }
         } catch (err) {
@@ -151,6 +165,7 @@ export async function POST(req: Request) {
           controller.enqueue(
             encoder.encode(`\n\n…I lost my train of thought. Mind asking that again?`),
           );
+          await record("chat_error", "stream");
         } finally {
           controller.close();
         }
@@ -165,6 +180,7 @@ export async function POST(req: Request) {
     });
   } catch (err) {
     console.error("[chat] generation failed", err);
+    after(() => record("chat_error", "upstream"));
     return friendly(
       502,
       `My brain is briefly offline. Please ${EMAIL_LINK}, or try again in a moment.`,

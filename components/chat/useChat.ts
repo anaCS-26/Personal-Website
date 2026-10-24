@@ -5,14 +5,6 @@ import { identity } from "@/lib/content";
 
 export type Msg = { role: "user" | "assistant"; content: string };
 
-export const SUGGESTIONS = [
-  "Who is Asad?",
-  "What has he built with AI?",
-  "Tell me about PulmoLens",
-  "What does he do for fun?",
-  "What's he cooking up?",
-];
-
 export const FALLBACK =
   `Hmm, I can't reach my brain right now. You can [email Asad](mailto:${identity.email}) directly, or browse [his projects](/projects) while I recover.`;
 

@@ -112,6 +112,7 @@ function renderInline(text: string, prefix: string): ReactNode[] {
         <a
           key={`${prefix}-a-${key++}`}
           href={href}
+          data-track="chat_link"
           className="text-link"
           {...(external && !href.startsWith("mailto:")
             ? { target: "_blank", rel: "noopener noreferrer" }

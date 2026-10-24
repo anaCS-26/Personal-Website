@@ -12,6 +12,15 @@ export const identity = {
   linkedin: "https://www.linkedin.com/in/asad-ansari-ontario/",
 };
 
+/** Starter questions shown as chips under the AsadGPT chat bar. */
+export const SUGGESTIONS = [
+  "Who is Asad?",
+  "What has he built with AI?",
+  "Tell me about PulmoLens",
+  "What does he do for fun?",
+  "What's he cooking up?",
+];
+
 export type Project = {
   slug: string;
   name: string;

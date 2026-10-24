@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { identity } from "@/lib/content";
+import { track } from "@/lib/track";
 
 export function CopyEmail() {
   const [copied, setCopied] = useState(false);
@@ -10,6 +11,7 @@ export function CopyEmail() {
     try {
       await navigator.clipboard.writeText(identity.email);
       setCopied(true);
+      track("email_copy");
       setTimeout(() => setCopied(false), 2000);
     } catch {
       // Clipboard blocked: fall back to opening the mail client

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Newsreader } from "next/font/google";
+import { SiteAnalytics } from "@/components/SiteAnalytics";
 import "./globals.css";
 
 // Normal style only — titles are deliberately non-italic, single color
@@ -57,6 +58,7 @@ export default function RootLayout({
           still hydrate strictly */}
       <body suppressHydrationWarning className="min-h-full flex flex-col">
         {children}
+        <SiteAnalytics />
       </body>
     </html>
   );

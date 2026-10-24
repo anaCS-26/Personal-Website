@@ -3,10 +3,12 @@ import type { NextConfig } from "next";
 const isDev = process.env.NODE_ENV === "development";
 
 // No nonces: the site loads nothing third-party, and the inline theme script in
-// app/layout.tsx needs 'unsafe-inline'.
+// app/layout.tsx needs 'unsafe-inline'. Vercel Web Analytics is served
+// same-origin from /_vercel/insights in production; in dev it loads a debug
+// script from its CDN.
 const csp = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""};
+  script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval' https://va.vercel-scripts.com" : ""};
   style-src 'self' 'unsafe-inline';
   img-src 'self' blob: data:;
   font-src 'self';

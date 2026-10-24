@@ -8,13 +8,13 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { ProjectCard } from "@/components/chat/ProjectCard";
 import { linkedProjectSlugs, renderRich } from "@/components/chat/rich";
 import {
-  SUGGESTIONS,
   getSpeechRecognition,
   useChat,
   type Msg,
   type SpeechRecognitionLike,
 } from "@/components/chat/useChat";
-import { identity, projects, type Project } from "@/lib/content";
+import { SUGGESTIONS, identity, projects, type Project } from "@/lib/content";
+import { track } from "@/lib/track";
 
 const MAX_CARDS = 2;
 
@@ -131,6 +131,7 @@ export function ChatHome() {
     recognitionRef.current = rec;
     setListening(true);
     rec.start();
+    track("voice");
   }, [listening]);
 
   const cards = projectCards(messages, busy ? messages.length - 1 : -1);
@@ -251,7 +252,10 @@ export function ChatHome() {
               <button
                 key={s}
                 type="button"
-                onClick={() => ask(s)}
+                onClick={() => {
+                  track("suggestion", s);
+                  ask(s);
+                }}
                 className="rounded-full border border-line bg-bg-elevated px-3.5 py-1.5 text-[13px] text-fg-muted transition-colors hover:border-line-strong hover:text-fg"
               >
                 {s}

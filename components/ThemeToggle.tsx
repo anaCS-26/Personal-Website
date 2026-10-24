@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { track } from "@/lib/track";
 
 type Theme = "dark" | "light";
 
@@ -16,6 +17,7 @@ export function ThemeToggle() {
     const next: Theme = theme === "dark" ? "light" : "dark";
     document.documentElement.dataset.theme = next;
     setTheme(next);
+    track("theme", next);
     try {
       localStorage.setItem("theme", next);
     } catch {

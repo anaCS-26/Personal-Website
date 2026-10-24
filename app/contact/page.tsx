@@ -30,7 +30,7 @@ export default function ContactPage() {
         <div className="grid items-center gap-1 py-5 sm:grid-cols-[9rem_1fr] sm:gap-6">
           <dt className="text-sm text-fg-faint">Email</dt>
           <dd className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <a href={`mailto:${identity.email}`} className="text-link">
+            <a href={`mailto:${identity.email}`} data-track="link" className="text-link">
               {identity.email}
             </a>
             <CopyEmail />
@@ -44,6 +44,7 @@ export default function ContactPage() {
             <dt className="text-sm text-fg-faint">{p.label}</dt>
             <dd>
               <a
+                data-track="link"
                 href={p.href}
                 target="_blank"
                 rel="noopener noreferrer"

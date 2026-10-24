@@ -45,7 +45,7 @@ if (hasUpstash) {
 
 // In-memory fallback (per warm serverless instance; best effort only).
 const memory = new Map<string, { count: number; windowStart: number }>();
-function memoryLimit(key: string, max: number, windowMs: number): boolean {
+export function memoryLimit(key: string, max: number, windowMs: number): boolean {
   const now = Date.now();
   const entry = memory.get(key);
   if (!entry || now - entry.windowStart > windowMs) {
