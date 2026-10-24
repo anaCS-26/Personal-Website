@@ -1,5 +1,5 @@
 import { userAgent, type NextRequest } from "next/server";
-import { record } from "@/lib/analytics";
+import { countable, record } from "@/lib/analytics";
 import { isClientEvent } from "@/lib/events";
 import { limitKey, memoryLimit } from "@/lib/ratelimit";
 
@@ -18,7 +18,8 @@ export async function POST(req: NextRequest) {
     (fetchSite !== null && fetchSite !== "same-origin") ||
     !req.headers.get("content-type")?.startsWith("application/json") ||
     Number(req.headers.get("content-length") ?? 0) > MAX_BODY_BYTES ||
-    userAgent(req).isBot
+    userAgent(req).isBot ||
+    !countable(req.headers)
   ) {
     return noContent();
   }

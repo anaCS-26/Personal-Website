@@ -215,9 +215,13 @@ export default async function StatsPage({
         <StatsOptOut />
       </div>
 
-      <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-5">
+      <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
         <Stat label="Visitors" value={stats.visitors} />
+        <Stat label="New visitors" value={total["visit:new"] ?? 0} />
+        <Stat label="Return visits" value={total["visit:returning"] ?? 0} />
         <Stat label="Page views" value={sum(breakdown(total, "view"))} />
+      </div>
+      <div className="mt-3 grid grid-cols-2 gap-3 md:grid-cols-3">
         <Stat label="Conversations" value={conversations} />
         <Stat label="Chat messages" value={sum(depth)} />
         <Stat label="Chatters" value={stats.chatters} />
@@ -225,10 +229,10 @@ export default async function StatsPage({
 
       <div className="mt-3 grid gap-3 lg:grid-cols-2">
         <DailyChart
-          title="Visitors"
-          unit="visitors"
+          title="New visitors"
+          unit="new visitors"
           days={days}
-          values={stats.days.map((d) => d.visitors)}
+          values={stats.days.map((d) => d.counts["visit:new"] ?? 0)}
         />
         <DailyChart
           title="AsadGPT conversations"
@@ -285,6 +289,7 @@ export default async function StatsPage({
             <tr>
               <th className="py-1.5 font-normal">Day</th>
               <th className="py-1.5 text-right font-normal">Visitors</th>
+              <th className="py-1.5 text-right font-normal">New</th>
               <th className="py-1.5 text-right font-normal">Page views</th>
               <th className="py-1.5 text-right font-normal">Conversations</th>
               <th className="py-1.5 text-right font-normal">Messages</th>
@@ -295,6 +300,7 @@ export default async function StatsPage({
               <tr key={d.day}>
                 <td className="py-1.5">{fmtDay(d.day)}</td>
                 <td className="py-1.5 text-right">{d.visitors}</td>
+                <td className="py-1.5 text-right">{d.counts["visit:new"] ?? 0}</td>
                 <td className="py-1.5 text-right">{sum(breakdown(d.counts, "view"))}</td>
                 <td className="py-1.5 text-right">{d.counts["chat_message:1"] ?? 0}</td>
                 <td className="py-1.5 text-right">{sum(breakdown(d.counts, "chat_message"))}</td>
@@ -316,7 +322,15 @@ export default async function StatsPage({
           Vercel Web Analytics
           <ArrowUpRightIcon size={12} />
         </a>
-        . Visitor counts are cookieless estimates by IP address, which itself is never stored.
+        .
+      </p>
+      <p className="mt-3 text-sm text-fg-muted">
+        Visitors are distinct network addresses (estimated; no IP is stored),
+        so the range total counts someone on two networks twice. New visitors
+        are browsers on their first visit, and return visits are later visits
+        from those browsers; a private window or cleared browser counts as new.
+        Browsers that send Global Privacy Control or Do Not Track aren&apos;t
+        counted.
       </p>
     </PageShell>
   );

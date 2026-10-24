@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import { identity } from "@/lib/content";
+import { optedOut } from "@/lib/track";
 
 export type Msg = { role: "user" | "assistant"; content: string };
 
@@ -41,7 +42,11 @@ export function useChat() {
       try {
         const res = await fetch("/api/chat", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            // Keeps the owner's (and GPC/DNT browsers') chats out of the stats
+            ...(optedOut() && { "X-No-Track": "1" }),
+          },
           body: JSON.stringify({ messages: history.slice(-12) }),
           signal: ctrl.signal,
         });

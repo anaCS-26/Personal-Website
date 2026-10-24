@@ -28,6 +28,18 @@ export type UniqueSet = "visitors" | "chatters";
 const utcDay = (d = new Date()) => d.toISOString().slice(0, 10);
 
 /**
+ * False when the visitor asked not to be counted: Global Privacy Control,
+ * Do Not Track, or the owner's opt-out (X-No-Track, sent by useChat).
+ */
+export function countable(headers: Headers): boolean {
+  return (
+    headers.get("sec-gpc") !== "1" &&
+    headers.get("dnt") !== "1" &&
+    headers.get("x-no-track") !== "1"
+  );
+}
+
+/**
  * Count one event for today. Never throws: analytics must not break the
  * request it rides on.
  */

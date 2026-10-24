@@ -1,6 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { after } from "next/server";
-import { record } from "@/lib/analytics";
+import { countable, record } from "@/lib/analytics";
 import { checkLimits, limitKey } from "@/lib/ratelimit";
 import { SYSTEM_PROMPT } from "@/lib/system-prompt";
 import { identity } from "@/lib/content";
@@ -80,11 +80,13 @@ export async function POST(req: Request) {
 
   const ip =
     req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "anonymous";
+  // Visitors who opted out of analytics (see countable) aren't recorded
+  const count: typeof record = countable(req.headers) ? record : async () => {};
 
   try {
     const verdict = await checkLimits(ip);
     if (!verdict.ok) {
-      after(() => record("chat_blocked", verdict.reason));
+      after(() => count("chat_blocked", verdict.reason));
       if (verdict.reason === "ip") {
         return friendly(
           429,
@@ -117,7 +119,7 @@ export async function POST(req: Request) {
   // MAX_TURNS, so deep conversations bucket into "6+".
   const turn = messages.filter((m) => m.role === "user").length;
   after(() =>
-    record("chat_message", turn >= 6 ? "6+" : String(turn), {
+    count("chat_message", turn >= 6 ? "6+" : String(turn), {
       set: "chatters",
       id: limitKey(ip),
     }),
@@ -157,7 +159,7 @@ export async function POST(req: Request) {
               controller.enqueue(
                 encoder.encode(`\n\nThat's not something I can help with. Ask me about Asad's work, or ${EMAIL_LINK} directly.`),
               );
-              await record("chat_error", "refusal");
+              await count("chat_error", "refusal");
             }
           }
         } catch (err) {
@@ -165,7 +167,7 @@ export async function POST(req: Request) {
           controller.enqueue(
             encoder.encode(`\n\n…I lost my train of thought. Mind asking that again?`),
           );
-          await record("chat_error", "stream");
+          await count("chat_error", "stream");
         } finally {
           controller.close();
         }
@@ -180,7 +182,7 @@ export async function POST(req: Request) {
     });
   } catch (err) {
     console.error("[chat] generation failed", err);
-    after(() => record("chat_error", "upstream"));
+    after(() => count("chat_error", "upstream"));
     return friendly(
       502,
       `My brain is briefly offline. Please ${EMAIL_LINK}, or try again in a moment.`,

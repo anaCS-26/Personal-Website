@@ -84,6 +84,7 @@ const LINK_TARGETS = [
 /** Events the browser may send, each with its allowed details (null: none). */
 export const CLIENT_EVENTS = {
   view: [...PAGES, "other"],
+  visit: ["new", "returning"], // once per visit: has this browser been here before?
   referrer: [...REFERRERS.map(([, label]) => label), "Direct", "Other"],
   suggestion: SUGGESTIONS,
   voice: null,
