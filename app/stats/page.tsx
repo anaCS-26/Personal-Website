@@ -246,7 +246,7 @@ export default async function StatsPage({
         <Ranked title="Pages" rows={breakdown(total, "view")} />
         <Ranked
           title="Where visitors came from"
-          note="The referring site on each visitor's first page of a visit."
+          note="The link's ?ref= tag (e.g. ?ref=reddit), else the referring site, on the first page of each visit."
           rows={breakdown(total, "referrer")}
         />
         <Ranked

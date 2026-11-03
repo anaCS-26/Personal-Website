@@ -33,6 +33,32 @@ export function referrerBucket(referrer: string): string {
   }
 }
 
+const squash = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+/** `?ref=` tags that name a source by another spelling. */
+const REF_ALIASES: Record<string, string> = {
+  hn: "Hacker News",
+  twitter: "X",
+};
+
+/**
+ * Where a visit came from: a `?ref=` (or `utm_source=`) tag on the link
+ * wins, since apps like Reddit's often send no referrer at all; otherwise
+ * the referring site. Tags are matched case- and punctuation-insensitively
+ * against the known sources ("reddit", "Reddit", "hacker-news"); an unknown
+ * tag falls back to the referrer, so links can't add rows to the dashboard.
+ */
+export function visitSource(search: string, referrer: string): string {
+  const params = new URLSearchParams(search);
+  const tag = squash(params.get("ref") ?? params.get("utm_source") ?? "");
+  if (tag) {
+    const label =
+      REF_ALIASES[tag] ?? REFERRERS.map(([, l]) => l).find((l) => squash(l) === tag);
+    if (label) return label;
+  }
+  return referrerBucket(referrer);
+}
+
 const LINK_KINDS = { github: "source", demo: "demo", appStore: "appstore", site: "site" } as const;
 const stripSlash = (u: string) => u.replace(/\/+$/, "");
 

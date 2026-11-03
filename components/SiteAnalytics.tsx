@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Analytics } from "@vercel/analytics/next";
-import { PAGES, linkTarget, referrerBucket, type ClientEvent } from "@/lib/events";
+import { PAGES, linkTarget, visitSource, type ClientEvent } from "@/lib/events";
 import { VISITED_KEY, optedOut, track } from "@/lib/track";
 
 /** Pages that are never counted (the private dashboard). */
@@ -40,7 +40,7 @@ export function SiteAnalytics() {
     const ref = document.referrer;
     if (ref.startsWith(window.location.origin)) return; // a new tab opened from this site
     track("visit", firstVisit ? "new" : "returning");
-    track("referrer", referrerBucket(ref));
+    track("referrer", visitSource(window.location.search, ref));
   }, []);
 
   useEffect(() => {
